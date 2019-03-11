@@ -7,7 +7,7 @@ This add-on provides a set of tools to integrate ember with the [fire](https://g
 ## Installation
 
 ```
-ember install ember-fire
+ember install @256dpi/ember-fire
 ```
 
 ## License
