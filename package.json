@@ -1,13 +1,19 @@
 {
   "name": "ember-fire",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Ember extensions for the fire framework.",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/256dpi/ember-fire.git"
+  },
   "license": "MIT",
-  "author": "",
+  "author": {
+    "name": "Joël Gähwwiler",
+    "email": "joel.gaehwiler@gmail.com"
+  },
   "directories": {
     "doc": "doc",
     "test": "tests"
