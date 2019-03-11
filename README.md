@@ -1,17 +1,12 @@
 # ember-fire
 
-[Short description of the addon.]
+This add-on provides a set of tools to integrate ember with the [fire](https://github.com/256dpi/fire) framework.
 
 ## Installation
 
 ```
 ember install ember-fire
 ```
-
-## Usage
-
-[Longer description of how to use the addon in apps.]
-
 
 ## License
 
