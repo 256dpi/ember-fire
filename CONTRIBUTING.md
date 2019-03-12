@@ -26,3 +26,9 @@ Follow the below steps to setup a development environment.
 * Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+
+## Releasing
+
+1. Bump version in `package.json`.
+2. Publish to NPM.
+3. Tag Release on GitHub and document changes.
