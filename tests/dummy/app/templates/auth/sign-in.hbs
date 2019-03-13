@@ -1,0 +1,15 @@
+<form {{action 'authenticate'}}>
+  <p>
+    <label>Email</label>
+    {{input value=email type="email"}}
+  </p>
+
+  <p>
+    <label>Password</label>
+    {{input value=password type="password"}}
+  </p>
+
+  <p>
+    <button {{action 'authenticate'}}>Sign In</button>
+  </p>
+</form>
