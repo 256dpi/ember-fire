@@ -1,8 +1,9 @@
 import Mixin from '@ember/object/mixin';
 
-// AutomaticRollback is a Route mixin that on every transition checks if the
-// model has dirty attributes. It will ask the users to abandon the changes and
-// rollback the model.
+/**
+ * AutomaticRollback is a Route mixin that on every transition checks if the model has dirty attributes.
+ * It will ask the users to abandon the changes and rollback the model.
+ */
 export default Mixin.create({
   actions: {
     willTransition(transition) {
