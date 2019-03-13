@@ -2,46 +2,95 @@ import Mixin from '@ember/object/mixin';
 
 import ErrorHandling from '@256dpi/ember-fire/mixins/error-handling';
 
-// BasicOperations is a Controller mixin that takes care of the common model
-// actions: create, update and delete.
+/**
+ * BasicOperations is a Controller mixin that takes care of the common model actions: create, update and delete.
+ */
 export default Mixin.create(ErrorHandling, {
+  /**
+   * The route to transition to after a create.
+   */
+  afterCreateRoute: false,
+
+  /**
+   * The route to transition to after an update.
+   */
+  afterUpdateRoute: false,
+
+  /**
+   * The route to transition to after a delete.
+   */
+  afterDeleteRoute: false,
+
+  /**
+   * Whether the model should be added to the transition.
+   */
   transitionWithModel: false,
-  afterCreateRoute: 'application',
-  afterUpdateRoute: 'application',
-  afterDeleteRoute: 'application',
-  setAttribute(key, value) {
-    this.get('model').set(key, value);
-  },
-  saveModel(route) {
-    this.get('model')
-      .save()
-      .then(() => {
-        if (this.get('transitionWithModel')) {
-          this.transitionToRoute(this.get(route), this.get('model'));
-        } else {
-          this.transitionToRoute(this.get(route));
-        }
-      })
-      .catch(failure => {
-        this.setError(failure);
-      });
-  },
+
   actions: {
+    /**
+     * Trigger the creation of the model.
+     */
     create() {
-      this.saveModel('afterCreateRoute');
+      // save model
+      this.get('model')
+        .save()
+        .then(() => {
+          // transition if requested
+          if (this.get('afterCreateRoute')) {
+            if (this.get('transitionWithModel')) {
+              this.transitionToRoute(this.get('afterCreateRoute'), this.get('model'));
+            } else {
+              this.transitionToRoute(this.get('afterCreateRoute'));
+            }
+          }
+        })
+        .catch(failure => {
+          // show error
+          this.setError(failure);
+        });
     },
+
+    /**
+     * Trigger an update of the model.
+     */
     update() {
-      this.saveModel('afterUpdateRoute');
+      // update model
+      this.get('model')
+        .save()
+        .then(() => {
+          // transition if requested
+          if (this.get('afterUpdateRoute')) {
+            if (this.get('transitionWithModel')) {
+              this.transitionToRoute(this.get('afterUpdateRoute'), this.get('model'));
+            } else {
+              this.transitionToRoute(this.get('afterUpdateRoute'));
+            }
+          }
+        })
+        .catch(failure => {
+          // show error
+          this.setError(failure);
+        });
     },
+
+    /**
+     * Trigger the deletion of the model.
+     */
     delete() {
       if (confirm('Do you really want to delete it?')) {
         this.get('model')
           .destroyRecord()
           .then(model => {
+            // remove record from store
             model.unloadRecord();
-            this.transitionToRoute(this.get('afterDeleteRoute'));
+
+            // transition if requested
+            if(this.get('afterDeleteRoute')) {
+              this.transitionToRoute(this.get('afterDeleteRoute'));
+            }
           })
           .catch(failure => {
+            // show error
             this.setError(failure);
           });
       }
