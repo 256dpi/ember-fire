@@ -1,6 +1,7 @@
 {{#if session.isAuthenticated}}
   <p>
     <button {{action "signOut"}}>Sign Out</button>
+    <span>Watch: {{watch.connectionStatus}}</span>
   </p>
 {{/if}}
 
