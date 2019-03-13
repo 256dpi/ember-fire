@@ -1,7 +1,24 @@
 import Mixin from '@ember/object/mixin';
 
-// ErrorHandling is a controller mixin that takes care of error handling.
+/**
+ * ErrorHandling is a controller mixin that takes care of error handling.
+ */
 export default Mixin.create({
+  /**
+   * The time after which an error is reset.
+   */
+  errorTimeout: 5000,
+
+  /**
+   * Holds the timeout id for an eventual clearTimeout() call.
+   */
+  currentTimeout: null,
+
+  /**
+   * Will parse the error and put a message in the "error" property.
+   *
+   * @param failure The error.
+   */
   setError(failure) {
     // oauth2 errors
     if (failure['error_description']) {
@@ -20,9 +37,21 @@ export default Mixin.create({
       this.set('error', failure.toString());
     }
 
-    // remove error after 5 seconds
-    setTimeout(() => {
+    // clear current timeout if existing
+    if (this.get('currentTimeout')) {
+      clearTimeout(this.get('currentTimeout'));
+    }
+
+    // remove error after a timeout
+    let timeout = setTimeout(() => {
+      // reset error
       this.set('error', undefined);
-    }, 5000);
+
+      // reset timeout
+      this.set('currentTimeout', null);
+    }, this.get('errorTimeout'));
+
+    // store timeout
+    this.set('currentTimeout', timeout);
   }
 });
