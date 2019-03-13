@@ -10,6 +10,9 @@ Router.map(function() {
   this.route('auth', function(){
     this.route('sign-in');
   });
+
+  this.route('new');
+  this.route('edit', { path: ':item_id' });
 });
 
 export default Router;

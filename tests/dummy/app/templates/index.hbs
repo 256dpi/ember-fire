@@ -1,5 +1,13 @@
 <h1>Items</h1>
 
+<p>
+  {{link-to 'Add Item' 'new'}}
+</p>
+
 {{#each model as |item|}}
   <p>{{item.name}}</p>
+
+  <p>
+    {{link-to 'Edit' 'edit' item}}
+  </p>
 {{/each}}

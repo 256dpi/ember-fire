@@ -1,0 +1,13 @@
+<h1>Edit Item</h1>
+
+<form {{action "update" on="submit"}}>
+  <p>
+    <label>Name</label>
+    {{input value=model.name placeholder="Name"}}
+  </p>
+
+  <p>
+    <button {{action "update"}}>Update</button>
+    <button {{action "delete"}}>Delete</button>
+  </p>
+</form>

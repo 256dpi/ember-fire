@@ -1,0 +1,12 @@
+<h1>Add Item</h1>
+
+<form {{action "create" on="submit"}}>
+  <p>
+    <label>Name</label>
+    {{input value=model.name placeholder="Name"}}
+  </p>
+
+  <p>
+    <button {{action "create"}}>Create</button>
+  </p>
+</form>
