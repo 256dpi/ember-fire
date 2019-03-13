@@ -1,24 +1,17 @@
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  session: service('session'),
+import ErrorHandling from '@256dpi/ember-fire/mixins/error-handling';
+
+export default Controller.extend(ErrorHandling, {
   email: '',
   password: '',
   actions: {
-    authenticate() {
+    signIn() {
       this.get('session')
         .authenticate('authenticator:oauth2', this.get('email'), this.get('password'))
         .catch(err => {
           this.setError(err);
         });
     }
-  },
-  setError(failure) {
-    this.set('error', failure['error_description'] || failure['error'] || 'Unknown Error');
-
-    setTimeout(() => {
-      this.set('error', null);
-    }, 2000);
   }
 });

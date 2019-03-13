@@ -9,7 +9,11 @@
     {{input value=password type="password"}}
   </p>
 
+  {{#if error}}
+    <p>{{error}}</p>
+  {{/if}}
+
   <p>
-    <button {{action "authenticate"}}>Sign In</button>
+    <button {{action "signIn"}}>Sign In</button>
   </p>
 </form>

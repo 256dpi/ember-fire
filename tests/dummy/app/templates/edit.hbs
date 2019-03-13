@@ -6,6 +6,10 @@
     {{input value=model.name placeholder="Name"}}
   </p>
 
+  {{#if error}}
+    <p>{{error}}</p>
+  {{/if}}
+
   <p>
     <button {{action "update"}}>Update</button>
     <button {{action "delete"}}>Delete</button>
