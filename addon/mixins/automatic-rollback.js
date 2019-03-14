@@ -26,6 +26,11 @@ export default Mixin.create({
       // get model
       let model = this.controller.get('model');
 
+      // ignore deleted models
+      if (model.get('isDeleted')) {
+        return;
+      }
+
       // abort transition if model has dirty attributes and changes should not be abandoned
       if(model.get('hasDirtyAttributes') && !this.abandonCallback(model)) {
         // abort transition
