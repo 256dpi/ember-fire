@@ -1,7 +1,9 @@
 import Mixin from '@ember/object/mixin';
 import { inject } from '@ember/service';
 
-export default Mixin.create({
+import CustomActions from '@256dpi/ember-fire/mixins/custom-actions';
+
+export default Mixin.create(CustomActions, {
   watch: inject(),
 
   findAndWatchAll(model, options = {}) {
