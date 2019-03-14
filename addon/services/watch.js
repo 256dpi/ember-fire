@@ -37,7 +37,7 @@ export default Service.extend({
     this.set('subscriptions', {});
   },
 
-  ___initializer: on('init', observer('session.isAuthenticated', function() {
+  _initializer: on('init', observer('session.isAuthenticated', function() {
     // asses whether a connection should be made
     let connect = !this.get('requireAccessToken') || this.get('session.isAuthenticated');
 
@@ -109,10 +109,16 @@ export default Service.extend({
    *
    * @param key The custom key.
    * @param watchToken The obtained watch token.
+   * @param replace Whether a cached subscription should be replace.
    */
-  subscribe(key, watchToken) {
+  subscribe(key, watchToken, replace = true) {
     // get subscriptions
     let subscriptions = this.get('subscriptions');
+
+    // return if subscription exists and should not be replaced
+    if (!replace && subscriptions[key]) {
+      return;
+    }
 
     // store subscription
     subscriptions[key] = watchToken;
@@ -127,10 +133,11 @@ export default Service.extend({
 
     // prepare subscription
     let sub = {
-      subscribe: {
-        key: watchToken,
-      }
+      subscribe: {}
     };
+
+    // add sub
+    sub.subscribe[key] = watchToken;
 
     // send subscription
     ws.send(JSON.stringify(sub));
@@ -176,96 +183,93 @@ export default Service.extend({
   },
 
   messageHandler(data) {
-    console.log(data);
+    // go through all models
+    Object.keys(data).forEach(name => {
+      // go through all ids
+      Object.keys(data[name]).forEach(id => {
+        // get singular model name
+        let model = singularize(name);
 
-    //let model = singularize(msg['name']);
-
-    // TODO: Ignore notifications from this instance and remove delay.
-
-    // delay processing for one second to ensure the originator has caught up
-    // setTimeout(() => {
-    //   switch (msg['action']) {
-    //     case 'create':
-    //       this.handleCreate(model, msg['id']);
-    //       break;
-    //     case 'update':
-    //       this.handleUpdate(model, msg['id']);
-    //       break;
-    //     case 'delete':
-    //       this.handleDelete(model, msg['id']);
-    //       break;
-    //   }
-    // }, 500);
+        // handle event
+        this.handleEvent(model, id, data[name][id]);
+      })
+    });
   },
 
-  // handleCreate(model, id) {
-  //   // TODO: We should only receive ids we have access to. Otherwise the app
-  //   // will raise errors all the time.
-  //
-  //   // set last update
-  //   this.set('lastUpdate', Date.now());
-  //
-  //   // load record
-  //   this.get('store').findRecord(model, id);
-  // },
-  //
-  // handleUpdate(model, id) {
-  //   // get saved record
-  //   let record = this.get('store').peekRecord(model, id);
-  //
-  //   // ignore not loaded records
-  //   if (!record) {
-  //     return;
-  //   }
-  //
-  //   // set last update
-  //   this.set('lastUpdate', Date.now());
-  //
-  //   // do not play with records that are currently saving
-  //   if (record.get('currentState.isSaving')) {
-  //     return;
-  //   }
-  //
-  //   // reload immediately if not dirty
-  //   if (!record.get('hasDirtyAttributes')) {
-  //     record.reload();
-  //     return;
-  //   }
-  //
-  //   // ask to continue
-  //   alert('This record has been UPDATED by someone else.\nWe will now update it to reflect the latest changes.');
-  //
-  //   // rollback and reload
-  //   record.rollbackAttributes();
-  //   record.reload();
-  // },
-  //
-  // handleDelete(model, id) {
-  //   // get saved record
-  //   let record = this.get('store').peekRecord(model, id);
-  //
-  //   // ignore not loaded records
-  //   if (!record) {
-  //     return;
-  //   }
-  //
-  //   // set last update
-  //   this.set('lastUpdate', Date.now());
-  //
-  //   // unload immediately if not dirty
-  //   if (!record.get('hasDirtyAttributes')) {
-  //     record.unloadRecord();
-  //     return;
-  //   }
-  //
-  //   // inform
-  //   alert('This record has been DELETED by someone else.\nWe will remove it to reflect the latest changes.');
-  //
-  //   // rollback and unload
-  //   record.rollbackAttributes();
-  //   record.unloadRecord();
-  //
-  //   // transition to root
-  //   this.get('routing').transitionTo('application');
-  // }
+  handleEvent(model, id, operation) {
+    switch (operation) {
+      case 'create':
+        this.handleCreate(model, id);
+        break;
+      case 'update':
+        this.handleUpdate(model, id);
+        break;
+      case 'delete':
+        this.handleDelete(model, id);
+        break;
+    }
+  },
+
+  handleCreate(model, id) {
+    // load record
+    this.get('store').findRecord(model, id);
+  },
+
+  handleUpdate(model, id) {
+    // get saved record
+    let record = this.get('store').peekRecord(model, id);
+
+    // ignore not loaded records
+    if (!record) {
+      return;
+    }
+
+    // do not play with records that are currently saving
+    if (record.get('currentState.isSaving')) {
+      return;
+    }
+
+    // reload immediately if not dirty
+    if (!record.get('hasDirtyAttributes')) {
+      record.reload();
+      return;
+    }
+
+    // TODO: Add callback for dirty updates.
+
+    // ask to continue
+    alert('This record has been UPDATED by someone else.\nWe will now update it to reflect the latest changes.');
+
+    // rollback and reload
+    record.rollbackAttributes();
+    record.reload();
+  },
+
+  handleDelete(model, id) {
+    // get saved record
+    let record = this.get('store').peekRecord(model, id);
+
+    // ignore not loaded records
+    if (!record) {
+      return;
+    }
+
+    // unload immediately if not dirty
+    if (!record.get('hasDirtyAttributes')) {
+      record.unloadRecord();
+      return;
+    }
+
+    // TODO: Add callback for dirty updates.
+
+    // inform
+    alert('This record has been DELETED by someone else.\nWe will remove it to reflect the latest changes.');
+
+    // rollback and unload
+    record.rollbackAttributes();
+    record.unloadRecord();
+
+    // transition to root
+    this.get('routing').transitionTo('application');
+  }
 });
