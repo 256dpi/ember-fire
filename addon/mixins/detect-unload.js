@@ -27,7 +27,7 @@ export default Mixin.create({
    *
    * @param model The model.
    */
-  unloadCallback(model) {
+  unloadCallback() {
     alert('This record has been deleted.\nWe will go back now.');
   },
 
