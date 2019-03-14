@@ -75,7 +75,15 @@ export default Service.extend({
     }
 
     // create new websocket
-    ws = new ReconnectingWebsocket(url);
+    ws = new ReconnectingWebsocket(url, [], {
+      maxReconnectionDelay: 5000,
+      minReconnectionDelay: 50,
+      minUptime: 5000,
+      reconnectionDelayGrowFactor: 2,
+      connectionTimeout: 4000,
+      maxRetries: Infinity,
+      debug: false,
+    });
 
     // add connect listener
     ws.addEventListener('open', () => {
