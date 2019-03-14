@@ -1,5 +1,7 @@
 import Mixin from '@ember/object/mixin';
 
+// TODO: Expose abandon confirmation as a callback.
+
 /**
  * AutomaticRollback is a Route mixin that on every transition checks if the model has dirty attributes.
  * It will ask the users to abandon the changes and rollback the model.

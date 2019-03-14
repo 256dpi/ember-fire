@@ -1,6 +1,8 @@
 import { Promise } from 'rsvp';
 import Mixin from '@ember/object/mixin';
 
+// TODO: Create a store mixin.
+
 /**
  * FindByQuery is a Route mixin that allows specifying a query when searching for models.
  */

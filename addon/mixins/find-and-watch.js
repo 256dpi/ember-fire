@@ -3,6 +3,8 @@ import { inject } from '@ember/service';
 
 import CustomActions from '@256dpi/ember-fire/mixins/custom-actions';
 
+// TODO: Should these be properly ordered? Subscribe first and then load records?
+
 /**
  * FindAndWatch is a store mixin that provides additional store methods to find records and watch them at the same time.
  */

@@ -1,5 +1,7 @@
 import Mixin from '@ember/object/mixin';
 
+// TODO: Support non JSON responses?
+
 /**
  * CustomActions provides methods to call group, collection and resource actions.
  */
