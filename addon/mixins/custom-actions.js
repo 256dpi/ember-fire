@@ -1,7 +1,7 @@
 import Mixin from '@ember/object/mixin';
 
 /**
- * StoreActions provides methods to call group, collection and resource actions.
+ * CustomActions provides methods to call group, collection and resource actions.
  */
 export default Mixin.create({
   callGroupAction() {
