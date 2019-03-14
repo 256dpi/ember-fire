@@ -6,8 +6,25 @@ import Mixin from '@ember/object/mixin';
  * CustomActions provides methods to call group, collection and resource actions.
  */
 export default Mixin.create({
-  callGroupAction() {
-    // TODO: Implement.
+  /**
+   * Call the specified group action.
+   *
+   * @param method The HTTP method.
+   * @param action The action name.
+   * @param data The data for POST, PUT and PATCH requests.
+   * @returns {EmberPromise}
+   */
+  callGroupAction(method, action, data = {}) {
+    // get adapter
+    let adapter = this.adapterFor('application', action);
+
+    // build url
+    let url = `${adapter.buildURL()}/${action}`;
+
+    // make request
+    return adapter.ajax(url, method, {
+      data,
+    });
   },
 
   /**
