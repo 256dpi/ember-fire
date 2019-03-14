@@ -7,9 +7,6 @@ import { inject } from '@ember/service';
 import ReconnectingWebsocket from 'reconnecting-websocket';
 
 export default Service.extend({
-  session: inject(),
-  store: inject(),
-
   /**
    * The main watch URL for the websocket to connect to.
    *
@@ -26,6 +23,110 @@ export default Service.extend({
    * Connection Status is set with the websocket connection status.
    */
   connectionStatus: false,
+
+  /**
+   * The callback that is called to handle updates of dirty models.
+   *
+   * @param model The model.
+   */
+  handleDirtyUpdate(model) {
+    // ask to continue
+    alert('This model has been updated.\nWe will now reset it to reflect the latest changes.');
+
+    // rollback and reload
+    model.rollbackAttributes();
+    model.reload();
+  },
+
+  /**
+   * The callback that is called to handle deletion of of dirty models.
+   *
+   * @param model The model.
+   */
+  handleDirtyDelete(model) {
+    // inform
+    alert('This model has been deleted.\nWe will remove it to reflect the latest changes.');
+
+    // rollback and unload
+    model.rollbackAttributes();
+    model.unloadRecord();
+
+    // transition to root
+    this.get('routing').transitionTo('application');
+  },
+
+  /**
+   * Subscribe will cache and issue the provided subscription.
+   *
+   * @param key The custom key.
+   * @param watchToken The obtained watch token.
+   * @param replace Whether a cached subscription should be replace.
+   */
+  subscribe(key, watchToken, replace = true) {
+    // get subscriptions
+    let subscriptions = this.get('subscriptions');
+
+    // return if subscription exists and should not be replaced
+    if (!replace && subscriptions[key]) {
+      return;
+    }
+
+    // store subscription
+    subscriptions[key] = watchToken;
+
+    // get websocket
+    let ws = this.websocket;
+
+    // return if not available
+    if (!ws) {
+      return;
+    }
+
+    // prepare subscription
+    let sub = {
+      subscribe: {}
+    };
+
+    // add sub
+    sub.subscribe[key] = watchToken;
+
+    // send subscription
+    ws.send(JSON.stringify(sub));
+  },
+
+  /**
+   * Unsubscribe will unsubscribe the subscription associated with the provided key.
+   *
+   * @param key THe custom key.
+   */
+  unsubscribe(key) {
+    // get subscriptions
+    let subscriptions = this.get('subscriptions');
+
+    // delete subscription
+    delete subscriptions[key];
+
+    // get websocket
+    let ws = this.websocket;
+
+    // return if not available
+    if (!ws) {
+      return;
+    }
+
+    // prepare unsubscription
+    let unsub = {
+      unsubscribe: [key],
+    };
+
+    // send subscription
+    ws.send(JSON.stringify(unsub));
+  },
+
+  /* private stuff */
+
+  session: inject(),
+  store: inject(),
 
   websocket: null,
 
@@ -102,74 +203,6 @@ export default Service.extend({
     this.set('websocket', ws);
   })),
 
-  /**
-   * Subscribe will cache and issue the provided subscription.
-   *
-   * @param key The custom key.
-   * @param watchToken The obtained watch token.
-   * @param replace Whether a cached subscription should be replace.
-   */
-  subscribe(key, watchToken, replace = true) {
-    // get subscriptions
-    let subscriptions = this.get('subscriptions');
-
-    // return if subscription exists and should not be replaced
-    if (!replace && subscriptions[key]) {
-      return;
-    }
-
-    // store subscription
-    subscriptions[key] = watchToken;
-
-    // get websocket
-    let ws = this.websocket;
-
-    // return if not available
-    if (!ws) {
-      return;
-    }
-
-    // prepare subscription
-    let sub = {
-      subscribe: {}
-    };
-
-    // add sub
-    sub.subscribe[key] = watchToken;
-
-    // send subscription
-    ws.send(JSON.stringify(sub));
-  },
-
-  /**
-   * Unsubscribe will unsubscribe the subscription associated with the provided key.
-   *
-   * @param key THe custom key.
-   */
-  unsubscribe(key) {
-    // get subscriptions
-    let subscriptions = this.get('subscriptions');
-
-    // delete subscription
-    delete subscriptions[key];
-
-    // get websocket
-    let ws = this.websocket;
-
-    // return if not available
-    if (!ws) {
-      return;
-    }
-
-    // prepare unsubscription
-    let unsub = {
-      unsubscribe: [key],
-    };
-
-    // send subscription
-    ws.send(JSON.stringify(unsub));
-  },
-
   openHandler() {
     // set flag
     this.set('connectionStatus', true);
@@ -234,14 +267,8 @@ export default Service.extend({
       return;
     }
 
-    // TODO: Add callback for dirty updates.
-
-    // ask to continue
-    alert('This record has been UPDATED by someone else.\nWe will now update it to reflect the latest changes.');
-
-    // rollback and reload
-    record.rollbackAttributes();
-    record.reload();
+    // offload dirty update handling
+    this.handleDirtyUpdate(record);
   },
 
   handleDelete(model, id) {
@@ -259,16 +286,7 @@ export default Service.extend({
       return;
     }
 
-    // TODO: Add callback for dirty updates.
-
-    // inform
-    alert('This record has been DELETED by someone else.\nWe will remove it to reflect the latest changes.');
-
-    // rollback and unload
-    record.rollbackAttributes();
-    record.unloadRecord();
-
-    // transition to root
-    this.get('routing').transitionTo('application');
+    // offload dirty delete handling
+    this.handleDirtyDelete(record);
   }
 });
