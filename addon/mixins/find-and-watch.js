@@ -19,7 +19,7 @@ export default Mixin.create(CustomActions, {
   findAndWatchAll(model, options = {}) {
     // get watch token and subscribe it
     this.callCollectionAction('GET', model, 'watch').then(res => {
-      this.watch.subscribe(`fwa-${model}-all`, res.token, false);
+      this.watch.subscribe(`${model}-all`, res.token, false);
     });
 
     // find records
@@ -37,7 +37,7 @@ export default Mixin.create(CustomActions, {
   findAndWatchRecord(model, id, options = {}) {
     // get watch token and subscribe it
     this.callResourceAction('GET', model, id, 'watch').then(res => {
-      this.watch.subscribe(`fwr-${model}-${id}`, res.token, false);
+      this.watch.subscribe(`${model}-${id}`, res.token, false);
     });
 
     // find record
