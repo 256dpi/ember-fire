@@ -22,19 +22,37 @@ export default Mixin.create({
     this.set('announcedID', id);
   },
 
+  /**
+   * The callback that is called when an unload has been detected.
+   *
+   * @param model The model.
+   */
+  unloadCallback(model) {
+    alert('This record has been deleted.\nWe will go back now.');
+  },
+
   /* private */
 
   announcedID: null,
 
   unloadObserver: observer('model.isDeleted', function() {
-    if (this.get('model.isDeleted') && this.get('model.id') !== this.get('announcedID')) {
-      next(() => {
-        alert('This record has been deleted.\nWe will go back now.');
+    // get model
+    let model = this.get('model');
 
-        if (this.get('afterUnloadRoute')) {
-          this.transitionToRoute(this.get('afterUnloadRoute'));
-        }
-      });
+    // return if not deleted or model has been announced
+    if (!model.get('isDeleted')|| model.get('id') === this.get('announcedID')) {
+      return;
     }
+
+    // queue alert and deletion
+    next(() => {
+      // call callback
+      this.unloadCallback(model);
+
+      // transition if a route has been set
+      if (this.get('afterUnloadRoute')) {
+        this.transitionToRoute(this.get('afterUnloadRoute'));
+      }
+    });
   })
 });
