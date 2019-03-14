@@ -49,10 +49,8 @@ export default Service.extend({
       // close current websocket if existing
       if (ws) {
         ws.close();
+        this.set('websocket', null);
       }
-
-      // reset websocket
-      this.set('websocket', null);
 
       return;
     }
@@ -197,6 +195,7 @@ export default Service.extend({
   },
 
   handleEvent(model, id, operation) {
+    // check event operation
     switch (operation) {
       case 'create':
         this.handleCreate(model, id);
@@ -224,7 +223,7 @@ export default Service.extend({
       return;
     }
 
-    // do not play with records that are currently saving
+    // do not interfere with records that are currently saving
     if (record.get('currentState.isSaving')) {
       return;
     }

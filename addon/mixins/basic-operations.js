@@ -2,7 +2,7 @@ import Mixin from '@ember/object/mixin';
 
 import ErrorHandling from '@256dpi/ember-fire/mixins/error-handling';
 
-// TODO: Expose delte confirmation as a callback.
+// TODO: Expose delete confirmation as a callback.
 
 /**
  * BasicOperations is a Controller mixin that takes care of the common model actions: create, update and delete.
