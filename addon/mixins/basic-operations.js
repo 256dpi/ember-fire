@@ -40,6 +40,7 @@ export default Mixin.create(ErrorHandling, {
      * Trigger the creation of the model.
      */
     create() {
+      // get model
       let model = this.get('model');
 
       // save model
@@ -64,6 +65,7 @@ export default Mixin.create(ErrorHandling, {
      * Trigger an update of the model.
      */
     update() {
+      // get model
       let model = this.get('model');
 
       // update model
@@ -91,22 +93,31 @@ export default Mixin.create(ErrorHandling, {
       // get model
       let model = this.get('model');
 
-      if (this.deleteConfirmation(model)) {
-        model.destroyRecord()
-          .then(model => {
-            // remove record from store
-            model.unloadRecord();
-
-            // transition if requested
-            if(this.get('afterDeleteRoute')) {
-              this.transitionToRoute(this.get('afterDeleteRoute'));
-            }
-          })
-          .catch(failure => {
-            // show error
-            this.setError(failure);
-          });
+      // return immediately if delete is not confirmed
+      if (!this.deleteConfirmation(model)) {
+        return;
       }
+
+      // announce delete if supported
+      if (this.announceDelete) {
+        this.announceDelete(model.get('id'));
+      }
+
+      // delete record
+      model.destroyRecord()
+        .then(model => {
+          // remove record from store
+          model.unloadRecord();
+
+          // transition if requested
+          if(this.get('afterDeleteRoute')) {
+            this.transitionToRoute(this.get('afterDeleteRoute'));
+          }
+        })
+        .catch(failure => {
+          // show error
+          this.setError(failure);
+        });
     }
   }
 });
