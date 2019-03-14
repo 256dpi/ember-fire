@@ -40,7 +40,7 @@ export default Mixin.create({
     let model = this.get('model');
 
     // return if not deleted or model has been announced
-    if (!model.get('isDeleted')|| model.get('id') === this.get('announcedID')) {
+    if (!model.get('isDeleted') || model.get('id') === this.get('announcedID')) {
       return;
     }
 
