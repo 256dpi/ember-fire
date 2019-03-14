@@ -2,9 +2,14 @@ import Service from '@ember/service';
 import { observer } from '@ember/object';
 import { on } from '@ember/object/evented';
 import { singularize } from 'ember-inflector';
+import { inject } from '@ember/service';
+
 import ReconnectingWebsocket from 'reconnecting-websocket';
 
 export default Service.extend({
+  session: inject(),
+  store: inject(),
+
   /**
    * The main watch URL for the websocket to connect to.
    *
