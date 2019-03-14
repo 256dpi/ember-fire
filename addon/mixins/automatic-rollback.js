@@ -1,13 +1,15 @@
 import Mixin from '@ember/object/mixin';
 
 /**
- * AutomaticRollback is a Route mixin that on every transition checks if the model has dirty attributes.
- * It will ask the users to abandon the changes and rollback the model.
+ * AutomaticRollback is a Route mixin that on every transition tries to to automatically rollback eventual changes to
+ * the model. If the model has dirty attributes it will consult the abandonCallback() and abort the transition or revert
+ * changes. Unsaved models are unloaded from the store.
  */
 export default Mixin.create({
   /**
-   * The callback that is run to determine if a transition should be aborted.
+   * The callback that is run to determine if changes should be abandoned.
    *
+   * @param model The model.
    * @returns boolean
    */
   abandonCallback() {
@@ -20,7 +22,7 @@ export default Mixin.create({
       let model = this.controller.get('model');
 
       // abort transition if model has dirty attributes and changes should not be abandoned
-      if(model.get('hasDirtyAttributes') && !this.abandonCallback()) {
+      if(model.get('hasDirtyAttributes') && !this.abandonCallback(model)) {
         // abort transition
         transition.abort();
 
