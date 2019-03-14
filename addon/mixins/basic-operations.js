@@ -2,8 +2,6 @@ import Mixin from '@ember/object/mixin';
 
 import ErrorHandling from '@256dpi/ember-fire/mixins/error-handling';
 
-// TODO: Expose delete confirmation as a callback.
-
 /**
  * BasicOperations is a Controller mixin that takes care of the common model actions: create, update and delete.
  */
@@ -28,19 +26,29 @@ export default Mixin.create(ErrorHandling, {
    */
   transitionWithModel: false,
 
+  /**
+   * The callback that is run to confirm the deletion.
+   *
+   * @returns {boolean}
+   */
+  deleteConfirmation() {
+    return confirm('Do you really want to delete it?');
+  },
+
   actions: {
     /**
      * Trigger the creation of the model.
      */
     create() {
+      let model = this.get('model');
+
       // save model
-      this.get('model')
-        .save()
+      model.save()
         .then(() => {
           // transition if requested
           if (this.get('afterCreateRoute')) {
             if (this.get('transitionWithModel')) {
-              this.transitionToRoute(this.get('afterCreateRoute'), this.get('model'));
+              this.transitionToRoute(this.get('afterCreateRoute'), model);
             } else {
               this.transitionToRoute(this.get('afterCreateRoute'));
             }
@@ -56,14 +64,15 @@ export default Mixin.create(ErrorHandling, {
      * Trigger an update of the model.
      */
     update() {
+      let model = this.get('model');
+
       // update model
-      this.get('model')
-        .save()
+      model.save()
         .then(() => {
           // transition if requested
           if (this.get('afterUpdateRoute')) {
             if (this.get('transitionWithModel')) {
-              this.transitionToRoute(this.get('afterUpdateRoute'), this.get('model'));
+              this.transitionToRoute(this.get('afterUpdateRoute'), model);
             } else {
               this.transitionToRoute(this.get('afterUpdateRoute'));
             }
@@ -79,9 +88,11 @@ export default Mixin.create(ErrorHandling, {
      * Trigger the deletion of the model.
      */
     delete() {
-      if (confirm('Do you really want to delete it?')) {
-        this.get('model')
-          .destroyRecord()
+      // get model
+      let model = this.get('model');
+
+      if (this.deleteConfirmation(model)) {
+        model.destroyRecord()
           .then(model => {
             // remove record from store
             model.unloadRecord();
