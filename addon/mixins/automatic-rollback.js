@@ -32,7 +32,7 @@ export default Mixin.create({
       }
 
       // abort transition if model has dirty attributes and changes should not be abandoned
-      if(model.get('hasDirtyAttributes') && !this.abandonCallback(model)) {
+      if (model.get('hasDirtyAttributes') && !this.abandonCallback(model)) {
         // abort transition
         transition.abort();
 
@@ -48,8 +48,8 @@ export default Mixin.create({
       }
 
       // rollback dirty attributes if changed
-      if(model.get('hasDirtyAttributes')) {
-          model.rollbackAttributes();
+      if (model.get('hasDirtyAttributes')) {
+        model.rollbackAttributes();
       }
     }
   }

@@ -117,7 +117,7 @@ export default Service.extend({
 
     // prepare unsubscription
     let unsub = {
-      unsubscribe: [key],
+      unsubscribe: [key]
     };
 
     // send subscription
@@ -139,70 +139,73 @@ export default Service.extend({
     this.set('subscriptions', {});
   },
 
-  _initializer: on('init', observer('session.isAuthenticated', function() {
-    // asses whether a connection should be made
-    let connect = !this.get('requireAccessToken') || this.get('session.isAuthenticated');
+  _initializer: on(
+    'init',
+    observer('session.isAuthenticated', function() {
+      // asses whether a connection should be made
+      let connect = !this.get('requireAccessToken') || this.get('session.isAuthenticated');
 
-    // get current websocket
-    let ws = this.get('websocket');
+      // get current websocket
+      let ws = this.get('websocket');
 
-    // handle case where we should not be connected (no authenticated)
-    if (!connect) {
-      // close current websocket if existing
-      if (ws) {
-        ws.close();
-        this.set('websocket', null);
+      // handle case where we should not be connected (no authenticated)
+      if (!connect) {
+        // close current websocket if existing
+        if (ws) {
+          ws.close();
+          this.set('websocket', null);
+        }
+
+        return;
       }
 
-      return;
-    }
+      // return if we are already connected
+      if (ws) {
+        return;
+      }
 
-    // return if we are already connected
-    if (ws) {
-      return;
-    }
+      // prepare url
+      let url = this.get('watchURL');
 
-    // prepare url
-    let url = this.get('watchURL');
+      // add access token if required
+      if (this.get('requireAccessToken')) {
+        // get access token
+        let at = this.get('session.data.authenticated.access_token');
 
-    // add access token if required
-    if (this.get('requireAccessToken')) {
-      // get access token
-      let at = this.get('session.data.authenticated.access_token');
+        // add to url
+        url += `?access_token=${at}`;
+      }
 
-      // add to url
-      url += `?access_token=${at}`;
-    }
+      // create new websocket
+      ws = new ReconnectingWebsocket(url, [], {
+        maxReconnectionDelay: 5000,
+        minReconnectionDelay: 50,
+        minUptime: 5000,
+        reconnectionDelayGrowFactor: 2,
+        connectionTimeout: 4000,
+        maxRetries: Infinity,
+        debug: false
+      });
 
-    // create new websocket
-    ws = new ReconnectingWebsocket(url, [], {
-      maxReconnectionDelay: 5000,
-      minReconnectionDelay: 50,
-      minUptime: 5000,
-      reconnectionDelayGrowFactor: 2,
-      connectionTimeout: 4000,
-      maxRetries: Infinity,
-      debug: false,
-    });
+      // add connect listener
+      ws.addEventListener('open', () => {
+        this.openHandler();
+      });
 
-    // add connect listener
-    ws.addEventListener('open', () => {
-      this.openHandler();
-    });
+      // add close listener
+      ws.addEventListener('close', () => {
+        this.closeHandler();
+      });
 
-    // add close listener
-    ws.addEventListener('close',() => {
-      this.closeHandler();
-    });
+      // add message listener
+      ws.addEventListener('message', e => {
+        this.messageHandler(JSON.parse(e.data));
+      });
 
-    // add message listener
-    ws.addEventListener('message',e => {
-      this.messageHandler(JSON.parse(e.data));
-    });
-
-    // save websocket
-    this.set('websocket', ws);
-  })),
+      // save websocket
+      this.set('websocket', ws);
+    })
+  ),
 
   openHandler() {
     // set flag
@@ -224,7 +227,7 @@ export default Service.extend({
 
         // handle event
         this.handleEvent(model, id, data[name][id]);
-      })
+      });
     });
   },
 

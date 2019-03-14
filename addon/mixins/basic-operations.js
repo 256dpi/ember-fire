@@ -44,7 +44,8 @@ export default Mixin.create(ErrorHandling, {
       let model = this.get('model');
 
       // save model
-      model.save()
+      model
+        .save()
         .then(() => {
           // transition if requested
           if (this.get('afterCreateRoute')) {
@@ -69,7 +70,8 @@ export default Mixin.create(ErrorHandling, {
       let model = this.get('model');
 
       // update model
-      model.save()
+      model
+        .save()
         .then(() => {
           // transition if requested
           if (this.get('afterUpdateRoute')) {
@@ -104,13 +106,14 @@ export default Mixin.create(ErrorHandling, {
       }
 
       // delete record
-      model.destroyRecord()
+      model
+        .destroyRecord()
         .then(model => {
           // remove record from store
           model.unloadRecord();
 
           // transition if requested
-          if(this.get('afterDeleteRoute')) {
+          if (this.get('afterDeleteRoute')) {
             this.transitionToRoute(this.get('afterDeleteRoute'));
           }
         })

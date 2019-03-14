@@ -23,7 +23,7 @@ export default Mixin.create({
 
     // make request
     return adapter.ajax(url, method, {
-      data,
+      data
     });
   },
 
@@ -45,7 +45,7 @@ export default Mixin.create({
 
     // make request
     return adapter.ajax(url, method, {
-      data,
+      data
     });
   },
 
@@ -68,7 +68,7 @@ export default Mixin.create({
 
     // make request
     return adapter.ajax(url, method, {
-      data,
+      data
     });
   }
 });
