@@ -49,6 +49,7 @@ export default Service.extend({
 
     // rollback and unload
     model.rollbackAttributes();
+    model.deleteRecord();
     model.unloadRecord();
 
     // transition to root
@@ -282,6 +283,7 @@ export default Service.extend({
 
     // unload immediately if not dirty
     if (!record.get('hasDirtyAttributes')) {
+      record.deleteRecord();
       record.unloadRecord();
       return;
     }
