@@ -3,4 +3,8 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 import AutomaticRollback from '@256dpi/ember-fire/mixins/automatic-rollback';
 
-export default Route.extend(AuthenticatedRouteMixin, AutomaticRollback);
+export default Route.extend(AuthenticatedRouteMixin, AutomaticRollback, {
+  model(params) {
+    return this.store.findAndWatchRecord('item', params['item_id']);
+  }
+});
