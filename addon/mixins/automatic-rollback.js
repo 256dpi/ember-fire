@@ -19,6 +19,8 @@ export default Mixin.create({
     return confirm('Are you sure you want to abandon your changes?');
   },
 
+  /* private */
+
   actions: {
     willTransition(transition) {
       // get model

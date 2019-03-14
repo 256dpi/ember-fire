@@ -9,8 +9,6 @@ import CustomActions from '@256dpi/ember-fire/mixins/custom-actions';
  * FindAndWatch is a store mixin that provides additional store methods to find records and watch them at the same time.
  */
 export default Mixin.create(CustomActions, {
-  watch: inject(),
-
   /**
    * Will call findAll() and fetch and subscribe the collection watch token.
    *
@@ -44,5 +42,9 @@ export default Mixin.create(CustomActions, {
 
     // find record
     return this.findRecord(model, id, options);
-  }
+  },
+
+  /* private */
+
+  watch: inject()
 });

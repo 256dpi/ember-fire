@@ -123,7 +123,7 @@ export default Service.extend({
     ws.send(JSON.stringify(unsub));
   },
 
-  /* private stuff */
+  /* private */
 
   session: inject(),
   store: inject(),
