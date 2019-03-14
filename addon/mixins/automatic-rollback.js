@@ -1,5 +1,8 @@
 import Mixin from '@ember/object/mixin';
 
+// TODO: Add support for promises in callback:
+//  https://stackoverflow.com/questions/45547575/ember-wait-for-promise-in-router-willtransition-hook.
+
 /**
  * AutomaticRollback is a Route mixin that on every transition tries to to automatically rollback eventual changes to
  * the model. If the model has dirty attributes it will consult the abandonCallback() and abort the transition or revert
