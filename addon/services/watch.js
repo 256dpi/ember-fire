@@ -20,9 +20,9 @@ export default Service.extend({
   requireAccessToken: true,
 
   /**
-   * Connection Status is set with the websocket connection status.
+   * Is set to true if the websocket is successfully.
    */
-  connectionStatus: false,
+  connected: false,
 
   /**
    * The callback that is called to handle updates of dirty models.
@@ -79,20 +79,20 @@ export default Service.extend({
     let ws = this.websocket;
 
     // return if not available
-    if (!ws) {
+    if (!ws || !this.get('connected')) {
       return;
     }
 
-    // prepare subscription
-    let sub = {
+    // prepare command
+    let cmd = {
       subscribe: {}
     };
 
-    // add sub
-    sub.subscribe[name] = data;
+    // add subscription
+    cmd.subscribe[name] = data;
 
-    // send subscription
-    ws.send(JSON.stringify(sub));
+    // send command
+    ws.send(JSON.stringify(cmd));
   },
 
   /**
@@ -111,17 +111,17 @@ export default Service.extend({
     let ws = this.websocket;
 
     // return if not available
-    if (!ws) {
+    if (!ws || !this.get('connected')) {
       return;
     }
 
-    // prepare unsubscription
-    let unsub = {
+    // prepare command
+    let cmd = {
       unsubscribe: [name]
     };
 
-    // send subscription
-    ws.send(JSON.stringify(unsub));
+    // send command
+    ws.send(JSON.stringify(cmd));
   },
 
   /* private */
@@ -209,14 +209,33 @@ export default Service.extend({
 
   openHandler() {
     // set flag
-    this.set('connectionStatus', true);
+    this.set('connected', true);
 
-    // TODO: Resubscribe cached subscriptions.
+    // resubscribe cached subscriptions
+
+    // get subscriptions
+    let subscriptions = this.get('subscriptions');
+
+    // get websocket
+    let ws = this.websocket;
+
+    // prepare subscription
+    let cmd = {
+      subscribe: {}
+    };
+
+    // add sub
+    Object.keys(subscriptions).forEach(name => {
+      cmd.subscribe[name] = subscriptions[name];
+    });
+
+    // send subscription
+    ws.send(JSON.stringify(cmd));
   },
 
   closeHandler() {
     // set flag
-    this.set('connectionStatus', false);
+    this.set('connected', false);
   },
 
   messageHandler(data) {
