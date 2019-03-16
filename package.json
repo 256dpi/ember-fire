@@ -30,7 +30,8 @@
   "dependencies": {
     "ember-auto-import": "^1.2.21",
     "ember-cli-babel": "^6.16.0",
-    "jwt-decode": "^2.2.0"
+    "jwt-decode": "^2.2.0",
+    "reconnecting-websocket": "^4.1.10"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",

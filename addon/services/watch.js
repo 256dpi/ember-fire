@@ -1,6 +1,10 @@
 import Service from '@ember/service';
+import { observer } from '@ember/object';
+import { on } from '@ember/object/evented';
 import { singularize } from 'ember-inflector';
 import { inject } from '@ember/service';
+
+import ReconnectingWebsocket from 'reconnecting-websocket';
 
 export default Service.extend({
   /**
@@ -11,9 +15,14 @@ export default Service.extend({
   watchURL: undefined,
 
   /**
-   * Define whether the users access token should be submitted to the endpoint.
+   * This setting controls whether the watch endpoint requires authentication using an access token.
    */
-  addAccessToken: true,
+  requireAccessToken: true,
+
+  /**
+   * Connection Status is set with the websocket connection status.
+   */
+  connectionStatus: false,
 
   /**
    * The callback that is called to handle updates of dirty models.
@@ -58,47 +67,32 @@ export default Service.extend({
     // get subscriptions
     let subscriptions = this.get('subscriptions');
 
-    // get existing event source
-    let es = subscriptions[name];
-
     // return if subscription exists and should not be replaced
-    if (!replace && es) {
+    if (!replace && subscriptions[name]) {
       return;
     }
 
-    // close existing event source
-    if (es) {
-      es.close();
+    // store subscription
+    subscriptions[name] = data;
+
+    // get websocket
+    let ws = this.websocket;
+
+    // return if not available
+    if (!ws) {
+      return;
     }
 
-    // prepare url
-    let url = this.get('watchURL');
-
-    // add stream name
-    url += `?s=${name}`;
-
-    // add data
-    url += `&d=${btoa(JSON.stringify(data))}`;
-
-    // add access token ig required
-    if (this.get('addAccessToken')) {
-      // get access token
-      let at = this.get('session.data.authenticated.access_token');
-
-      // add to url
-      url += `&access_token=${at}`;
-    }
-
-    // create event source
-    es = new EventSource(url);
-
-    // register handler
-    es.onmessage = e => {
-      this.messageHandler(JSON.parse(e.data));
+    // prepare subscription
+    let sub = {
+      subscribe: {}
     };
 
-    // store event stream
-    subscriptions[name] = es;
+    // add sub
+    sub.subscribe[name] = data;
+
+    // send subscription
+    ws.send(JSON.stringify(sub));
   },
 
   /**
@@ -110,19 +104,24 @@ export default Service.extend({
     // get subscriptions
     let subscriptions = this.get('subscriptions');
 
-    // get event source
-    let es = subscriptions[name];
+    // delete subscription
+    delete subscriptions[name];
 
-    // return if missing
-    if (!es) {
+    // get websocket
+    let ws = this.websocket;
+
+    // return if not available
+    if (!ws) {
       return;
     }
 
-    // close event source
-    es.close();
+    // prepare unsubscription
+    let unsub = {
+      unsubscribe: [name]
+    };
 
-    // delete event source
-    delete subscriptions[name];
+    // send subscription
+    ws.send(JSON.stringify(unsub));
   },
 
   /* private */
@@ -130,12 +129,94 @@ export default Service.extend({
   session: inject(),
   store: inject(),
 
+  websocket: null,
+
   init() {
     // call super
     this._super(...arguments);
 
     // initialize subscriptions
     this.set('subscriptions', {});
+  },
+
+  _initializer: on(
+    'init',
+    observer('session.isAuthenticated', function() {
+      // asses whether a connection should be made
+      let connect = !this.get('requireAccessToken') || this.get('session.isAuthenticated');
+
+      // get current websocket
+      let ws = this.get('websocket');
+
+      // handle case where we should not be connected (no authenticated)
+      if (!connect) {
+        // close current websocket if existing
+        if (ws) {
+          ws.close();
+          this.set('websocket', null);
+        }
+
+        return;
+      }
+
+      // return if we are already connected
+      if (ws) {
+        return;
+      }
+
+      // prepare url
+      let url = this.get('watchURL');
+
+      // add access token if required
+      if (this.get('requireAccessToken')) {
+        // get access token
+        let at = this.get('session.data.authenticated.access_token');
+
+        // add to url
+        url += `?access_token=${at}`;
+      }
+
+      // create new websocket
+      ws = new ReconnectingWebsocket(url, [], {
+        maxReconnectionDelay: 5000,
+        minReconnectionDelay: 50,
+        minUptime: 5000,
+        reconnectionDelayGrowFactor: 2,
+        connectionTimeout: 4000,
+        maxRetries: Infinity,
+        debug: false
+      });
+
+      // add connect listener
+      ws.addEventListener('open', () => {
+        this.openHandler();
+      });
+
+      // add close listener
+      ws.addEventListener('close', () => {
+        this.closeHandler();
+      });
+
+      // add message listener
+      ws.addEventListener('message', e => {
+        this.messageHandler(JSON.parse(e.data));
+      });
+
+      // save websocket
+      this.set('websocket', ws);
+    })
+  ),
+
+  openHandler() {
+    // set flag
+    this.set('connectionStatus', true);
+
+    // TODO: Resubscribe cached subscriptions.
+  },
+
+  closeHandler() {
+    // set flag
+    this.set('connectionStatus', false);
   },
 
   messageHandler(data) {
