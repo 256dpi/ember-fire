@@ -21,20 +21,25 @@ export default Mixin.create({
    */
   setError(failure) {
     // oauth2 errors
-    if (failure['error_description']) {
+    if (failure && failure['error_description']) {
       this.set('error', failure['error_description']);
-    } else if (failure['error']) {
+    } else if (failure && failure['error']) {
       this.set('error', failure['error']);
     }
 
     // json api errors
-    else if (failure['errors'] && failure['errors'].length > 0) {
+    else if (failure && failure['errors'] && failure['errors'].length > 0) {
       this.set('error', failure['errors'][0].detail || failure['errors'][0].title);
     }
 
     // fallback
-    else {
+    else if (failure) {
       this.set('error', failure.toString());
+    }
+
+    // last fallback
+    else {
+      this.set('error', 'unknown error');
     }
 
     // clear current timeout if existing
