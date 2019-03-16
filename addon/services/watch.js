@@ -236,13 +236,13 @@ export default Service.extend({
   handleEvent(model, id, operation) {
     // check event operation
     switch (operation) {
-      case 'create':
+      case 'created':
         this.handleCreate(model, id);
         break;
-      case 'update':
+      case 'updated':
         this.handleUpdate(model, id);
         break;
-      case 'delete':
+      case 'deleted':
         this.handleDelete(model, id);
         break;
     }
