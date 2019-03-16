@@ -6,6 +6,11 @@
     {{input value=model.name placeholder="Name"}}
   </p>
 
+  <p>
+    <label>State</label>
+    {{input checked=model.state type="checkbox"}}
+  </p>
+
   {{#if error}}
     <p>{{error}}</p>
   {{/if}}

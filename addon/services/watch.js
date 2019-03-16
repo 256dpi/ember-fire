@@ -59,21 +59,21 @@ export default Service.extend({
   /**
    * Subscribe will cache and issue the provided subscription.
    *
-   * @param key The custom key.
-   * @param watchToken The obtained watch token.
+   * @param name The subscription name.
+   * @param data The custom data object.
    * @param replace Whether a cached subscription should be replace.
    */
-  subscribe(key, watchToken, replace = true) {
+  subscribe(name, data, replace = true) {
     // get subscriptions
     let subscriptions = this.get('subscriptions');
 
     // return if subscription exists and should not be replaced
-    if (!replace && subscriptions[key]) {
+    if (!replace && subscriptions[name]) {
       return;
     }
 
     // store subscription
-    subscriptions[key] = watchToken;
+    subscriptions[name] = data;
 
     // get websocket
     let ws = this.websocket;
@@ -89,7 +89,7 @@ export default Service.extend({
     };
 
     // add sub
-    sub.subscribe[key] = watchToken;
+    sub.subscribe[name] = data;
 
     // send subscription
     ws.send(JSON.stringify(sub));
@@ -98,14 +98,14 @@ export default Service.extend({
   /**
    * Unsubscribe will unsubscribe the subscription associated with the provided key.
    *
-   * @param key THe custom key.
+   * @param name The subscription name.
    */
-  unsubscribe(key) {
+  unsubscribe(name) {
     // get subscriptions
     let subscriptions = this.get('subscriptions');
 
     // delete subscription
-    delete subscriptions[key];
+    delete subscriptions[name];
 
     // get websocket
     let ws = this.websocket;
@@ -117,7 +117,7 @@ export default Service.extend({
 
     // prepare unsubscription
     let unsub = {
-      unsubscribe: [key]
+      unsubscribe: [name]
     };
 
     // send subscription
@@ -210,6 +210,8 @@ export default Service.extend({
   openHandler() {
     // set flag
     this.set('connectionStatus', true);
+
+    // TODO: Resubscribe cached subscriptions.
   },
 
   closeHandler() {
