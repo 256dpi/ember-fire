@@ -1,6 +1,9 @@
 import Service from '@ember/service';
 import { singularize } from 'ember-inflector';
 import { inject } from '@ember/service';
+import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
+
+const EventSource = NativeEventSource || EventSourcePolyfill;
 
 export default Service.extend({
   /**
