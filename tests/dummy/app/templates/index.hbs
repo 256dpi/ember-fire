@@ -5,9 +5,10 @@
 </p>
 
 {{#each model as |item|}}
-  <p>{{item.name}}</p>
+  <p>{{item.name}} ({{item.count}})</p>
 
   <p>
+    <button {{action "add" item}}>Add</button>
     {{link-to "Edit" "edit" item.id}}
   </p>
 {{/each}}
