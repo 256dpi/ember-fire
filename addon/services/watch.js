@@ -6,6 +6,9 @@ import { inject } from '@ember/service';
 
 import ReconnectingWebsocket from 'reconnecting-websocket';
 
+/**
+ * The Watch service manages resource watching.
+ */
 export default Service.extend({
   /**
    * The main watch URL for the websocket to connect to.
