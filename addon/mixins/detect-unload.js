@@ -5,7 +5,7 @@ import { next } from '@ember/runloop';
 /**
  * DetectUnload is a Controller mixin that detects if a model gets unloaded and will perform a transition to the
  * afterDeleteRoute. The announceDelete method must be called before destroying, deleting or unloading a record to
- * ensure not duplicate transitions.
+ * prevent duplicate transitions.
  */
 export default Mixin.create({
   /**
