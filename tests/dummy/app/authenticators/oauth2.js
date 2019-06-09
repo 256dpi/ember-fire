@@ -2,6 +2,6 @@ import OAuth2PasswordGrant from 'ember-simple-auth/authenticators/oauth2-passwor
 
 export default OAuth2PasswordGrant.extend({
   clientId: 'main-key',
-  serverTokenEndpoint: 'http://0.0.0.0:8000/v1/auth/token',
-  serverTokenRevocationEndpoint: 'http://0.0.0.0:8000/v1/auth/revoke'
+  serverTokenEndpoint: 'http://0.0.0.0:8000/auth/token',
+  serverTokenRevocationEndpoint: 'http://0.0.0.0:8000/auth/revoke'
 });

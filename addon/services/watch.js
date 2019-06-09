@@ -13,7 +13,7 @@ export default Service.extend({
   /**
    * The main watch URL for the websocket to connect to.
    *
-   * @example 'wss://example.org/v1/api/watch'
+   * @example 'wss://example.org/api/watch'
    */
   watchURL: undefined,
 
