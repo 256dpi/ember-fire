@@ -1,7 +1,7 @@
 import Mixin from '@ember/object/mixin';
 
 /**
- * ErrorHandling is a controller mixin that takes care of error handling.
+ * ErrorHandling is a Controller mixin that takes care of error handling.
  */
 export default Mixin.create({
   /**
