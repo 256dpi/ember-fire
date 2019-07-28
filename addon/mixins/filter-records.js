@@ -1,5 +1,6 @@
 import { Promise } from 'rsvp';
 import Mixin from '@ember/object/mixin';
+import DS from 'ember-data';
 
 /**
  * FilterRecords is a Store mixin that allows filtering of records.
@@ -10,7 +11,7 @@ export default Mixin.create({
    *
    * @param model The name of the model.
    * @param filters The filter attributes.
-   * @returns {Promise}
+   * @returns {DS.PromiseArray}
    */
   filterAll(model, filters) {
     // compute query
@@ -19,7 +20,9 @@ export default Mixin.create({
       query['filter[' + key + ']'] = filters[key];
     });
 
-    return this.query(model, query);
+    return DS.PromiseArray.create({
+      promise: this.query(model, query)
+    });
   },
 
   /**
@@ -27,20 +30,22 @@ export default Mixin.create({
    *
    * @param model The name of the model.
    * @param filters The filter attributes.
-   * @returns {Promise}
+   * @returns {DS.PromiseObject}
    */
   filterRecord(model, filters) {
-    return new Promise((resolve, reject) => {
-      // query endpoint
-      this.filterAll(model, filters).then(
-        result => {
-          // return first object on success
-          resolve(result.objectAt(0));
-        },
-        err => {
-          reject(err);
-        }
-      );
+    return DS.PromiseObject.create({
+      promise: new Promise((resolve, reject) => {
+        // query endpoint
+        this.filterAll(model, filters).then(
+          result => {
+            // return first object on success
+            resolve(result.objectAt(0));
+          },
+          err => {
+            reject(err);
+          }
+        );
+      })
     });
   }
 });
