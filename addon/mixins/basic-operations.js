@@ -26,6 +26,9 @@ export default Mixin.create(ErrorHandling, {
    */
   transitionWithModel: false,
 
+  // TODO: Add support for promises in callback:
+  //  https://stackoverflow.com/questions/45547575/ember-wait-for-promise-in-router-willtransition-hook.
+
   /**
    * The callback that is run to confirm the deletion.
    *

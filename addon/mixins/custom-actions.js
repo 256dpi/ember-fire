@@ -12,7 +12,7 @@ export default Mixin.create({
    * @param method The HTTP method.
    * @param action The action name.
    * @param data The data for POST, PUT and PATCH requests.
-   * @returns {EmberPromise}
+   * @returns {Promise}
    */
   callGroupAction(method, action, data = {}) {
     // get adapter
@@ -34,7 +34,7 @@ export default Mixin.create({
    * @param name The model name.
    * @param action The action name.
    * @param data The data for POST, PUT and PATCH requests.
-   * @returns {EmberPromise}
+   * @returns {Promise}
    */
   callCollectionAction(method, name, action, data = {}) {
     // get adapter
@@ -57,7 +57,7 @@ export default Mixin.create({
    * @param id The model id.
    * @param action The action name.
    * @param data The data for POST, PUT and PATCH requests.
-   * @returns {EmberPromise}
+   * @returns {Promise}
    */
   callResourceAction(method, name, id, action, data = {}) {
     // get adapter
