@@ -1,6 +1,5 @@
 import Service, { inject as service } from '@ember/service';
-import { on } from '@ember/object/evented';
-import { observer } from '@ember/object';
+import { computed } from '@ember/object';
 
 import jwtDecode from 'jwt-decode';
 
@@ -21,30 +20,21 @@ export default Service.extend({
   /**
    * The user model retrieved from the access token.
    */
-  model: undefined,
+  model: computed('session.isAuthenticated', function() {
+    // check authentication
+    if (!this.get('session.isAuthenticated')) {
+      return null;
+    }
+
+    // get access token
+    let data = jwtDecode(this.get('session.data.authenticated.access_token'));
+
+    // find user
+    return this.get('store').findRecord(this.get('userModel'), data['dat'][this.get('dataKey')]);
+  }),
 
   /* private */
 
   store: service('store'),
-  session: service('session'),
-
-  observer: on(
-    'init',
-    observer('session.isAuthenticated', function() {
-      if (this.get('session.isAuthenticated')) {
-        // get access token
-        let data = jwtDecode(this.get('session.data.authenticated.access_token'));
-
-        // find user
-        this.get('store')
-          .findRecord(this.get('userModel'), data['dat'][this.get('dataKey')])
-          .then(user => {
-            // resolve promise
-            this.set('model', user);
-          });
-      } else {
-        this.set('model', undefined);
-      }
-    })
-  )
+  session: service('session')
 });
