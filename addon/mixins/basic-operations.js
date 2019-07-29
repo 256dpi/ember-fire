@@ -34,8 +34,8 @@ export default Mixin.create(ErrorHandling, {
    *
    * @returns {boolean}
    */
-  deleteConfirmation() {
-    return confirm('Do you really want to delete it?');
+  deleteCallback(model) { // eslint-disable-line no-unused-vars
+    return confirm('Do you really want to delete this record?');
   },
 
   actions: {
@@ -99,7 +99,7 @@ export default Mixin.create(ErrorHandling, {
       let model = this.get('model');
 
       // return immediately if delete is not confirmed
-      if (!this.deleteConfirmation(model)) {
+      if (!this.deleteCallback(model)) {
         return;
       }
 

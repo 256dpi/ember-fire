@@ -30,7 +30,7 @@ export default Mixin.create({
    *
    * @param model The model.
    */
-  unloadCallback() {
+  unloadCallback(model) { // eslint-disable-line no-unused-vars
     alert('This record has been deleted.\nWe will go back now.');
   },
 
