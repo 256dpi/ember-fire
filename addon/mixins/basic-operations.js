@@ -47,7 +47,7 @@ export default Mixin.create(ErrorHandling, {
       let model = this.get('model');
 
       // save model
-      model
+      return model
         .save()
         .then(() => {
           // transition if requested
@@ -73,7 +73,7 @@ export default Mixin.create(ErrorHandling, {
       let model = this.get('model');
 
       // update model
-      model
+      return model
         .save()
         .then(() => {
           // transition if requested
@@ -109,7 +109,7 @@ export default Mixin.create(ErrorHandling, {
       }
 
       // delete record
-      model
+      return model
         .destroyRecord()
         .then(model => {
           // remove record from store
