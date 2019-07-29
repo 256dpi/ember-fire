@@ -41,6 +41,8 @@ export default Mixin.create(ErrorHandling, {
   actions: {
     /**
      * Trigger the creation of the model.
+     *
+     * @returns {Promise}
      */
     create() {
       // get model
@@ -67,6 +69,8 @@ export default Mixin.create(ErrorHandling, {
 
     /**
      * Trigger an update of the model.
+     *
+     * @returns {Promise}
      */
     update() {
       // get model
@@ -93,6 +97,8 @@ export default Mixin.create(ErrorHandling, {
 
     /**
      * Trigger the deletion of the model.
+     *
+     * @returns {Promise}
      */
     delete() {
       // get model
