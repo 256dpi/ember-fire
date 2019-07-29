@@ -34,7 +34,7 @@ export default Mixin.create(ErrorHandling, {
    *
    * @returns {boolean}
    */
-  deleteCallback(model) { // eslint-disable-line no-unused-vars
+  deleteCallback(model) {
     return confirm('Do you really want to delete this record?');
   },
 
@@ -106,7 +106,7 @@ export default Mixin.create(ErrorHandling, {
 
       // return immediately if delete is not confirmed
       if (!this.deleteCallback(model)) {
-        return;
+        return null;
       }
 
       // announce delete if supported

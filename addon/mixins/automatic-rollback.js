@@ -15,7 +15,7 @@ export default Mixin.create({
    * @param model The model.
    * @returns boolean
    */
-  abandonCallback() {
+  abandonCallback(model) {
     return confirm('Are you sure you want to abandon your changes?');
   },
 
