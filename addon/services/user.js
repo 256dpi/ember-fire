@@ -1,5 +1,6 @@
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import DS from 'ember-data';
 
 import jwtDecode from 'jwt-decode';
 
@@ -30,7 +31,9 @@ export default Service.extend({
     let data = jwtDecode(this.get('session.data.authenticated.access_token'));
 
     // find user
-    return this.get('store').findRecord(this.get('userModel'), data['dat'][this.get('dataKey')]);
+    return DS.PromiseObject.create({
+      promise: this.get('store').findRecord(this.get('userModel'), data['dat'][this.get('dataKey')])
+    });
   }),
 
   /* private */
