@@ -271,8 +271,10 @@ export default Service.extend({
   },
 
   handleCreate(model, id) {
-    // load record
-    this.get('store').findRecord(model, id);
+    // load record with a small delay
+    setTimeout(() => {
+      this.get('store').findRecord(model, id);
+    }, 500);
   },
 
   handleUpdate(model, id) {
@@ -305,6 +307,11 @@ export default Service.extend({
 
     // ignore not loaded records
     if (!record) {
+      return;
+    }
+
+    // skip if deleted
+    if (record.get('isDeleted')) {
       return;
     }
 
