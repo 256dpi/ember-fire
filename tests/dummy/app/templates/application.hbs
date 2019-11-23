@@ -1,10 +1,12 @@
-{{#if session.isAuthenticated}}
-  <p>
-    <span>{{link-to "Index" "index"}}</span>
+<p>
+  <span>{{link-to "Index" "index"}}</span>
+  {{#if session.isAuthenticated}}
     <button {{action "signOut"}}>Sign Out</button>
     <span>User: {{user.model.name}}</span>
     <span>Watch: {{watch.connected}}</span>
-  </p>
-{{/if}}
+  {{else}}
+    <span>{{link-to "Sign In" "sign-in"}}</span>
+  {{/if}}
+</p>
 
 {{outlet}}
