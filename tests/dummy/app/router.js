@@ -8,6 +8,8 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('sign-in');
+  this.route('authorize');
+  this.route('return');
   this.route('new');
   this.route('edit', { path: ':item_id' });
 });

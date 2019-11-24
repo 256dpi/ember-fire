@@ -7,6 +7,8 @@
   {{else}}
     <span>{{link-to "Sign In" "sign-in"}}</span>
   {{/if}}
+  <button {{action "authorize" "token"}}>Authorize Token</button>
+  <button {{action "authorize" "code"}}>Authorize Code</button>
 </p>
 
 {{outlet}}
