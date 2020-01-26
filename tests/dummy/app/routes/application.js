@@ -5,5 +5,8 @@ export default Route.extend(ApplicationRouteMixin, {
   activate() {
     // subscribe to items
     this.watch.subscribe('items', { state: true });
+    this.watch.subscribe('values');
+    this.watch.subscribe('files');
+    this.watch.subscribe('jobs');
   }
 });

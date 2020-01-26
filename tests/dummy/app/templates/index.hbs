@@ -1,14 +1,173 @@
-<h1>Items</h1>
+<h2>Items</h2>
 
 <p>
-  {{link-to "Add Item" "new"}}
+  {{link-to "Create Item" "new"}}
 </p>
 
-{{#each model as |item|}}
-  <p>{{item.name}} ({{item.count}})</p>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Count</th>
+    <th>Blob</th>
+    <th>File</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
 
-  <p>
-    <button {{action "add" item}}>Add</button>
-    {{link-to "Edit" "edit" item.id}}
-  </p>
-{{/each}}
+  <tbody>
+    {{#each model.items as |item|}}
+      <tr>
+        <td>{{item.name}}</td>
+        <td>{{item.count}}</td>
+        <td>
+          {{#if item.blobURL}}
+            <img src="{{item.blobURL}}" height="100" alt=""/>
+          {{/if}}
+        </td>
+        <td>
+          {{#if item.fileURL}}
+            <img src="{{item.fileURL}}" height="100" alt=""/>
+          {{/if}}
+        </td>
+        <td>
+          <button {{action "add" item}}>Add</button>
+        </td>
+        <td>
+          {{link-to "Edit" "edit" item.id}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<h2>Values</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Component</th>
+    <th>Name</th>
+    <th>Deadline</th>
+    <th>Locked</th>
+    <th>Data</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {{#each model.values as |value|}}
+    <tr>
+      <td>
+        {{value.component}}
+      </td>
+
+      <td>
+        {{value.name}}
+      </td>
+
+      <td>
+        {{value.deadline}}
+      </td>
+
+      <td>
+        {{value.locked}}
+      </td>
+
+      <td>
+        {{value.prettyData}}
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+
+<h2>Files</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>State</th>
+    <th>Updated</th>
+    <th>Type</th>
+    <th>Length</th>
+    <th>Data</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {{#each model.files as |file|}}
+    <tr>
+      <td>
+        {{file.state}}
+      </td>
+
+      <td>
+        {{file.updatedAt}}
+      </td>
+
+      <td>
+        {{file.type}}
+      </td>
+
+      <td>
+        {{file.length}}
+      </td>
+
+      <td>
+        {{file.prettyData}}
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+
+<h2>Jobs</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Label</th>
+      <th>Status</th>
+      <th>Data</th>
+      <th>Created</th>
+      <th>Finished</th>
+      <th>Attempts</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {{#each model.jobs as |job|}}
+    <tr>
+      <td>
+        {{job.name}}
+      </td>
+
+      <td>
+        {{job.label}}
+      </td>
+
+      <td>
+        {{job.status}}
+      </td>
+
+      <td>
+        {{job.prettyData}}
+      </td>
+
+      <td>
+        {{job.createdAt}}
+      </td>
+
+      <td>
+        {{job.finishedAt}}
+      </td>
+
+      <td>
+        {{job.attempts}}
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

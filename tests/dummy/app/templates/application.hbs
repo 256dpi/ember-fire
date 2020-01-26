@@ -1,5 +1,8 @@
+<h1>Example</h1>
+
 <p>
   <span>{{link-to "Index" "index"}}</span>
+
   {{#if session.isAuthenticated}}
     <button {{action "signOut"}}>Sign Out</button>
     <span>User: {{user.model.name}}</span>
@@ -7,6 +10,7 @@
   {{else}}
     <span>{{link-to "Sign In" "sign-in"}}</span>
   {{/if}}
+
   <button {{action "authorize" "token"}}>Authorize Token</button>
   <button {{action "authorize" "code"}}>Authorize Code</button>
 </p>
