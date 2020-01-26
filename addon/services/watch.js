@@ -64,9 +64,9 @@ export default Service.extend({
    *
    * @param name The subscription name.
    * @param data The custom data object.
-   * @param replace Whether a cached subscription should be replace.
+   * @param replace Whether a cached subscription should be replaced.
    */
-  subscribe(name, data, replace = true) {
+  subscribe(name, data = {}, replace = true) {
     // get subscriptions
     let subscriptions = this.get('subscriptions');
 

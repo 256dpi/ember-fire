@@ -1,5 +1,5 @@
 import Service, { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import DS from 'ember-data';
 
 import jwtDecode from 'jwt-decode';
@@ -11,7 +11,7 @@ export default Service.extend({
   /**
    * The key used in the data object of the token claim to store the user id.
    */
-  dataKey: 'user',
+  dataKey: 'extra.user',
 
   /**
    * The name of the model that should be loaded.
@@ -19,9 +19,9 @@ export default Service.extend({
   userModel: 'user',
 
   /**
-   * The user model retrieved from the access token.
+   * The data read from the access token.
    */
-  model: computed('session.isAuthenticated', function() {
+  data: computed('session.isAuthenticated', function() {
     // check authentication
     if (!this.get('session.isAuthenticated')) {
       return null;
@@ -30,9 +30,24 @@ export default Service.extend({
     // get access token
     let data = jwtDecode(this.get('session.data.authenticated.access_token'));
 
+    return EmberObject.create(data['dat']);
+  }),
+
+  /**
+   * The user model retrieved from the access token.
+   */
+  model: computed('data', function() {
+    // get data
+    let data = this.get('data');
+
+    // check existence
+    if (!data) {
+      return null;
+    }
+
     // find user
     return DS.PromiseObject.create({
-      promise: this.get('store').findRecord(this.get('userModel'), data['dat'][this.get('dataKey')])
+      promise: this.get('store').findRecord(this.get('userModel'), data.get(this.get('dataKey')))
     });
   }),
 
