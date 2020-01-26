@@ -40,7 +40,7 @@
       {{/if}}
     {{/file-upload}}
 
-    {{#if (or previews.file model.file.url)}}
+    {{#if (or previews.file model.fileURL)}}
       <button {{action "unset" "file" "file"}}>Unset</button>
     {{/if}}
   </p>
