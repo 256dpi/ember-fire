@@ -1,11 +1,11 @@
 <h2>Authorize</h2>
 
 <ul>
-  <li>Client: <code>"{{client_id}}"</code></li>
-  <li>Response Type: <code>"{{response_type}}"</code></li>
-  <li>Scope: <code>"{{scope}}"</code></li>
-  <li>State: <code>"{{state}}"</code></li>
-  <li>Redirect URI: <code>"{{redirect_uri}}"</code></li>
+  <li>Client: <code>"{{this.client_id}}"</code></li>
+  <li>Response Type: <code>"{{this.response_type}}"</code></li>
+  <li>Scope: <code>"{{this.scope}}"</code></li>
+  <li>State: <code>"{{this.state}}"</code></li>
+  <li>Redirect URI: <code>"{{this.redirect_uri}}"</code></li>
 </ul>
 
-<button {{action "approve"}}>Approve</button>
+<button type="button" {{action "approve"}}>Approve</button>

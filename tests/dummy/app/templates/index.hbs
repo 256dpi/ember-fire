@@ -1,7 +1,7 @@
 <h2>Items</h2>
 
 <p>
-  {{link-to "Create Item" "new"}}
+  <LinkTo @route="new">Create Item</LinkTo>
 </p>
 
 <table>
@@ -17,25 +17,27 @@
   </thead>
 
   <tbody>
-    {{#each model.items as |item|}}
+    {{#each this.model.items as |item|}}
       <tr>
         <td>{{item.name}}</td>
         <td>{{item.count}}</td>
         <td>
           {{#if item.blobURL}}
-            <img src={{item.blobURL}} height="100" alt="">
+            <img src={{item.blobURL}} height="100" alt="...">
           {{/if}}
         </td>
         <td>
           {{#if item.fileURL}}
-            <img src={{item.fileURL}} height="100" alt="">
+            <img src={{item.fileURL}} height="100" alt="...">
           {{/if}}
         </td>
         <td>
-          <button {{action "add" item}}>Add</button>
+          <button type="button" {{action "add" item}}>
+            Add
+          </button>
         </td>
         <td>
-          {{link-to "Edit" "edit" item.id}}
+          <LinkTo @route="edit" @model={{item}}>Edit</LinkTo>
         </td>
       </tr>
     {{/each}}
@@ -56,7 +58,7 @@
   </thead>
 
   <tbody>
-    {{#each model.values as |value|}}
+    {{#each this.model.values as |value|}}
       <tr>
         <td>
           {{value.component}}
@@ -96,7 +98,7 @@
   </thead>
 
   <tbody>
-    {{#each model.files as |file|}}
+    {{#each this.model.files as |file|}}
       <tr>
         <td>
           {{file.state}}
@@ -138,7 +140,7 @@
   </thead>
 
   <tbody>
-    {{#each model.jobs as |job|}}
+    {{#each this.model.jobs as |job|}}
       <tr>
         <td>
           {{job.name}}

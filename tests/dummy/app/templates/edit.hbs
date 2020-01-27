@@ -3,54 +3,63 @@
 <form {{action "update" on="submit"}}>
   <p>
     <label>Name</label>
-    {{input value=model.name placeholder="Name"}}
+    <Input @value={{this.model.name}} placeholder="Name"/>
   </p>
 
   <p>
     <label>State</label>
-    {{input checked=model.state type="checkbox"}}
+    <Input @type="checkbox" @checked={{this.model.state}}/>
   </p>
 
   <p>
     <label>Blob</label><br>
 
-    {{#file-upload name="blob" accept="image/*" onfileadd=(action "store" "blob")}}
-      {{#if model.blobURL}}
-        <img src={{model.blobURL}} height="100" alt="">
+    <FileUpload @name="blob" @accept="image/*" @onfileadd={{action "store" "blob"}}>
+      {{#if this.model.blobURL}}
+        <img src={{this.model.blobURL}} height="100" alt="...">
       {{else}}
-        <a>Upload</a>
+        Upload
       {{/if}}
-    {{/file-upload}}
+    </FileUpload>
 
-    {{#if model.blobURL}}
-      <button {{action "unset" "blob" "blob"}}>Unset</button>
+    {{#if this.model.blobURL}}
+      <button type="button" {{action "unset" "blob" "blob"}}>
+        Unset
+      </button>
     {{/if}}
   </p>
 
   <p>
     <label>File</label><br>
 
-    {{#file-upload name="file" accept="image/*" onfileadd=(action "upload" "file")}}
-      {{#if previews.file}}
-        <img src={{previews.file}} height="100" alt="">
-      {{else if model.fileURL}}
-        <img src={{model.fileURL}} height="100" alt="">
+    <FileUpload @name="file" @accept="image/*" @onfileadd={{action "upload" "file"}}>
+      {{#if this.previews.file}}
+        <img src={{this.previews.file}} height="100" alt="...">
+      {{else if this.model.fileURL}}
+        <img src={{this.model.fileURL}} height="100" alt="...">
       {{else}}
-        <a>Upload</a>
+        Upload
       {{/if}}
-    {{/file-upload}}
+    </FileUpload>
 
-    {{#if (or previews.file model.fileURL)}}
-      <button {{action "unset" "file" "file"}}>Unset</button>
+    {{#if (or this.previews.file this.model.fileURL)}}
+      <button type="button" {{action "unset" "file" "file"}}>
+        Unset
+      </button>
     {{/if}}
   </p>
 
-  {{#if error}}
-    <p>{{error}}</p>
+  {{#if this.error}}
+    <p>{{this.error}}</p>
   {{/if}}
 
   <p>
-    <button {{action "update"}}>Update</button>
-    <button {{action "delete"}}>Delete</button>
+    <button type="button" {{action "update"}}>
+      Update
+    </button>
+
+    <button type="button" {{action "delete"}}>
+      Delete
+    </button>
   </p>
 </form>

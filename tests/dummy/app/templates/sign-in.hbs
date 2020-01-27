@@ -3,19 +3,21 @@
 <form {{action "authenticate" on="submit"}}>
   <p>
     <label>Email</label><br>
-    {{input value=email type="email"}}
+    <Input @type="email" @value={{this.email}}/>
   </p>
 
   <p>
     <label>Password</label><br>
-    {{input value=password type="password"}}
+    <Input @type="password" @value={{this.password}}/>
   </p>
 
-  {{#if error}}
-    <p>{{error}}</p>
+  {{#if this.error}}
+    <p>{{this.error}}</p>
   {{/if}}
 
   <p>
-    <button {{action "signIn"}}>Sign In</button>
+    <button type="submit" {{action "signIn"}}>
+      Sign In
+    </button>
   </p>
 </form>

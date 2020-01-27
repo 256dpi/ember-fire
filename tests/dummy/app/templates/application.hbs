@@ -1,18 +1,18 @@
 <h1>Example</h1>
 
 <p>
-  <span>{{link-to "Index" "index"}}</span>
+  <LinkTo @route="index">Index</LinkTo>
 
-  {{#if session.isAuthenticated}}
-    <button {{action "signOut"}}>Sign Out</button>
-    <span>User: {{user.model.name}}</span>
-    <span>Watch: {{watch.connected}}</span>
+  {{#if this.session.isAuthenticated}}
+    <button type="button" {{action "signOut"}}>Sign Out</button>
+    <span>User: {{this.user.model.name}}</span>
+    <span>Watch: {{this.watch.connected}}</span>
   {{else}}
-    <span>{{link-to "Sign In" "sign-in"}}</span>
+    <LinkTo @route="sign-in">Sign In</LinkTo>
   {{/if}}
 
-  <button {{action "authorize" "token"}}>Authorize Token</button>
-  <button {{action "authorize" "code"}}>Authorize Code</button>
+  <button type="button" {{action "authorize" "token"}}>Authorize Token</button>
+  <button type="button" {{action "authorize" "code"}}>Authorize Code</button>
 </p>
 
 {{outlet}}

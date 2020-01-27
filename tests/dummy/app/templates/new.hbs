@@ -3,19 +3,21 @@
 <form {{action "create" on="submit"}}>
   <p>
     <label>Name</label>
-    {{input value=model.name placeholder="Name"}}
+    <Input @value={{this.model.name}} placeholder="Name"/>
   </p>
 
   <p>
     <label>State</label>
-    {{input checked=model.state type="checkbox"}}
+    <Input @type="checkbox" @checked={{this.model.state}}/>
   </p>
 
-  {{#if error}}
-    <p>{{error}}</p>
+  {{#if this.error}}
+    <p>{{this.error}}</p>
   {{/if}}
 
   <p>
-    <button {{action "create"}}>Create</button>
+    <button type="button" {{action "create"}}>
+      Create
+    </button>
   </p>
 </form>
