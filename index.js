@@ -1,8 +1,5 @@
 'use strict';
 
 module.exports = {
-  name: require('./package').name,
-  options: {
-    autoImport: {}
-  }
+  name: require('./package').name
 };
