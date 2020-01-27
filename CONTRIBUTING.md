@@ -1,4 +1,4 @@
-# Contributing
+# How To Contribute
 
 Follow the below steps to setup a development environment.
 
