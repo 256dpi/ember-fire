@@ -32,6 +32,7 @@ export default Mixin.create(ErrorHandling, {
   /**
    * The callback that is run to confirm the deletion.
    *
+   * @param model The model.
    * @returns {boolean}
    */
   deleteCallback(model) {
@@ -42,11 +43,14 @@ export default Mixin.create(ErrorHandling, {
     /**
      * Trigger the creation of the model.
      *
+     * @param model The model.
      * @returns {Promise}
      */
-    create() {
+    create(model) {
       // get model
-      let model = this.get('model');
+      if (!model) {
+        model = this.get('model');
+      }
 
       // save model
       return model
@@ -70,11 +74,14 @@ export default Mixin.create(ErrorHandling, {
     /**
      * Trigger an update of the model.
      *
+     * @param model The model.
      * @returns {Promise}
      */
-    update() {
+    update(model) {
       // get model
-      let model = this.get('model');
+      if (!model) {
+        model = this.get('model');
+      }
 
       // update model
       return model
@@ -98,11 +105,14 @@ export default Mixin.create(ErrorHandling, {
     /**
      * Trigger the deletion of the model.
      *
+     * @param model The model.
      * @returns {Promise}
      */
-    delete() {
+    delete(model) {
       // get model
-      let model = this.get('model');
+      if (!model) {
+        model = this.get('model');
+      }
 
       // return immediately if delete is not confirmed
       if (!this.deleteCallback(model)) {
