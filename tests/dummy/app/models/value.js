@@ -2,8 +2,7 @@ import DS from 'ember-data';
 import { computed } from '@ember/object';
 
 export default DS.Model.extend({
-  component: DS.attr('string'),
-  name: DS.attr('string'),
+  key: DS.attr('string'),
   Data: DS.attr(),
   deadline: DS.attr('date'),
   locked: DS.attr('date'),

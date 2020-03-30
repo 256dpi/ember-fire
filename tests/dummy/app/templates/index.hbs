@@ -49,8 +49,7 @@
 <table>
   <thead>
     <tr>
-      <th>Component</th>
-      <th>Name</th>
+      <th>Key</th>
       <th>Deadline</th>
       <th>Locked</th>
       <th>Data</th>
@@ -61,11 +60,7 @@
     {{#each this.model.values as |value|}}
       <tr>
         <td>
-          {{value.component}}
-        </td>
-
-        <td>
-          {{value.name}}
+          {{value.key}}
         </td>
 
         <td>
