@@ -24,31 +24,29 @@ export default Mixin.create({
   actions: {
     willTransition(transition) {
       // get model
-      let model = this.controller.get('model');
+      let model = this.controller.model;
 
       // ignore deleted models
-      if (model.get('isDeleted')) {
+      if (model.isDeleted) {
         return;
       }
 
       // abort transition if model has dirty attributes and changes should not be abandoned
-      if (model.get('hasDirtyAttributes') && !this.abandonCallback(model)) {
-        // abort transition
+      if (model.hasDirtyAttributes && !this.abandonCallback(model)) {
         transition.abort();
-
         return;
       }
 
       // changes can be abandoned, if any
 
       // unload model if new
-      if (model.get('isNew')) {
+      if (model.isNew) {
         model.unloadRecord();
         return;
       }
 
       // rollback dirty attributes if changed
-      if (model.get('hasDirtyAttributes')) {
+      if (model.hasDirtyAttributes) {
         model.rollbackAttributes();
       }
     }

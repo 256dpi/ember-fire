@@ -40,10 +40,10 @@ export default Mixin.create({
 
   unloadObserver: observer('model.isDeleted', function() {
     // get model
-    let model = this.get('model');
+    let model = this.model;
 
     // return if not deleted or model has been announced
-    if (!model.get('isDeleted') || model.get('id') === this.get('announcedID')) {
+    if (!model.isDeleted || model.id === this.announcedID) {
       return;
     }
 
@@ -53,8 +53,8 @@ export default Mixin.create({
       this.unloadCallback(model);
 
       // transition if a route has been set
-      if (this.get('afterUnloadRoute')) {
-        this.transitionToRoute(this.get('afterUnloadRoute'));
+      if (this.afterUnloadRoute) {
+        this.transitionToRoute(this.afterUnloadRoute);
       }
     });
   })

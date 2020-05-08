@@ -49,7 +49,7 @@ export default Mixin.create(ErrorHandling, {
     create(model) {
       // get model
       if (!model) {
-        model = this.get('model');
+        model = this.model;
       }
 
       // save model
@@ -57,11 +57,11 @@ export default Mixin.create(ErrorHandling, {
         .save()
         .then(() => {
           // transition if requested
-          if (this.get('afterCreateRoute')) {
-            if (this.get('transitionWithModel')) {
-              this.transitionToRoute(this.get('afterCreateRoute'), model);
+          if (this.afterCreateRoute) {
+            if (this.transitionWithModel) {
+              this.transitionToRoute(this.afterCreateRoute, model);
             } else {
-              this.transitionToRoute(this.get('afterCreateRoute'));
+              this.transitionToRoute(this.afterCreateRoute);
             }
           }
         })
@@ -80,7 +80,7 @@ export default Mixin.create(ErrorHandling, {
     update(model) {
       // get model
       if (!model) {
-        model = this.get('model');
+        model = this.model;
       }
 
       // update model
@@ -88,11 +88,11 @@ export default Mixin.create(ErrorHandling, {
         .save()
         .then(() => {
           // transition if requested
-          if (this.get('afterUpdateRoute')) {
-            if (this.get('transitionWithModel')) {
-              this.transitionToRoute(this.get('afterUpdateRoute'), model);
+          if (this.afterUpdateRoute) {
+            if (this.transitionWithModel) {
+              this.transitionToRoute(this.afterUpdateRoute, model);
             } else {
-              this.transitionToRoute(this.get('afterUpdateRoute'));
+              this.transitionToRoute(this.afterUpdateRoute);
             }
           }
         })
@@ -111,7 +111,7 @@ export default Mixin.create(ErrorHandling, {
     delete(model) {
       // get model
       if (!model) {
-        model = this.get('model');
+        model = this.model;
       }
 
       // return immediately if delete is not confirmed
@@ -121,7 +121,7 @@ export default Mixin.create(ErrorHandling, {
 
       // announce delete if supported
       if (this.announceDelete) {
-        this.announceDelete(model.get('id'));
+        this.announceDelete(model.id);
       }
 
       // delete record
@@ -132,8 +132,8 @@ export default Mixin.create(ErrorHandling, {
           model.unloadRecord();
 
           // transition if requested
-          if (this.get('afterDeleteRoute')) {
-            this.transitionToRoute(this.get('afterDeleteRoute'));
+          if (this.afterDeleteRoute) {
+            this.transitionToRoute(this.afterDeleteRoute);
           }
         })
         .catch(failure => {

@@ -67,7 +67,7 @@ export default Service.extend({
    */
   subscribe(name, data = {}, replace = true) {
     // get subscriptions
-    let subscriptions = this.get('subscriptions');
+    let subscriptions = this.subscriptions;
 
     // return if subscription exists and should not be replaced
     if (!replace && subscriptions[name]) {
@@ -81,7 +81,7 @@ export default Service.extend({
     let ws = this.websocket;
 
     // return if not available
-    if (!ws || !this.get('connected')) {
+    if (!ws || !this.connected) {
       return;
     }
 
@@ -104,7 +104,7 @@ export default Service.extend({
    */
   unsubscribe(name) {
     // get subscriptions
-    let subscriptions = this.get('subscriptions');
+    let subscriptions = this.subscriptions;
 
     // delete subscription
     delete subscriptions[name];
@@ -113,7 +113,7 @@ export default Service.extend({
     let ws = this.websocket;
 
     // return if not available
-    if (!ws || !this.get('connected')) {
+    if (!ws || !this.connected) {
       return;
     }
 
@@ -145,10 +145,10 @@ export default Service.extend({
     'init',
     observer('session.isAuthenticated', function() {
       // asses whether a connection should be made
-      let connect = !this.get('requireAccessToken') || this.get('session.isAuthenticated');
+      let connect = !this.requireAccessToken || this.session.isAuthenticated;
 
       // get current websocket
-      let ws = this.get('websocket');
+      let ws = this.websocket;
 
       // handle case where we should not be connected (no authenticated)
       if (!connect) {
@@ -167,12 +167,12 @@ export default Service.extend({
       }
 
       // prepare url
-      let url = this.get('watchURL');
+      let url = this.watchURL;
 
       // add access token if required
-      if (this.get('requireAccessToken')) {
+      if (this.requireAccessToken) {
         // get access token
-        let at = this.get('session.data.authenticated.access_token');
+        let at = this.session.data.authenticated.access_token;
 
         // add to url
         url += `?access_token=${at}`;
@@ -216,7 +216,7 @@ export default Service.extend({
     // resubscribe cached subscriptions
 
     // get subscriptions
-    let subscriptions = this.get('subscriptions');
+    let subscriptions = this.subscriptions;
 
     // get websocket
     let ws = this.websocket;

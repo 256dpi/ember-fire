@@ -43,8 +43,8 @@ export default Mixin.create({
     }
 
     // clear current timeout if existing
-    if (this.get('currentTimeout')) {
-      clearTimeout(this.get('currentTimeout'));
+    if (this.currentTimeout) {
+      clearTimeout(this.currentTimeout);
     }
 
     // remove error after a timeout
@@ -54,7 +54,7 @@ export default Mixin.create({
 
       // reset timeout
       this.set('currentTimeout', null);
-    }, this.get('errorTimeout'));
+    }, this.errorTimeout);
 
     // store timeout
     this.set('currentTimeout', timeout);
