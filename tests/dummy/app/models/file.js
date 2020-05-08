@@ -1,14 +1,13 @@
 import Model, { attr } from '@ember-data/model';
-import { computed } from '@ember/object';
 
-export default Model.extend({
-  state: attr('string'),
-  updatedAt: attr('date'),
-  type: attr('string'),
-  length: attr('number'),
-  Data: attr(),
+export default class extends Model {
+  @attr('string') state;
+  @attr('date') updatedAt;
+  @attr('string') type;
+  @attr('number') length;
+  @attr handle;
 
-  prettyData: computed('Data', function() {
-    return JSON.stringify(this.get('Data'), null, '  ');
-  })
-});
+  get prettyHandle() {
+    return JSON.stringify(this.handle, null, '  ');
+  }
+}
