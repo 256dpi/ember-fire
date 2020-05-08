@@ -1,5 +1,5 @@
-import DS from 'ember-data';
+import Store from '@ember-data/store';
 
 import CustomActions from '@256dpi/ember-fire/mixins/custom-actions';
 
-export default DS.Store.extend(CustomActions);
+export default Store.extend(CustomActions);

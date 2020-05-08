@@ -1,15 +1,15 @@
-import DS from 'ember-data';
+import Model, { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { stringAsBlobURL } from '@256dpi/ember-fire/blob';
 
-export default DS.Model.extend({
-  name: DS.attr('string'),
-  state: DS.attr('boolean'),
-  count: DS.attr('number'),
-  blob: DS.attr(),
-  file: DS.attr(),
-  createToken: DS.attr('string'),
-  updateToken: DS.attr('string'),
+export default Model.extend({
+  name: attr('string'),
+  state: attr('boolean'),
+  count: attr('number'),
+  blob: attr(),
+  file: attr(),
+  createToken: attr('string'),
+  updateToken: attr('string'),
 
   blobURL: computed('blob.{bytes,type}', function() {
     if (this.get('blob.bytes')) {
