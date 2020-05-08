@@ -1,6 +1,6 @@
 <h2>Sign In</h2>
 
-<form {{action "signIn" on="submit"}}>
+<form {{on "submit" (prevent-default this.signIn)}}>
   <p>
     <label>Email</label><br>
     <Input @type="email" @value={{this.email}} required />

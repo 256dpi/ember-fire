@@ -11,7 +11,7 @@ export default class extends Model {
   @attr('string') updateToken;
 
   get blobURL() {
-    if (this.blob.bytes) {
+    if (this.blob && this.blob.bytes) {
       return stringAsBlobURL(this.blob.bytes, this.blob.type);
     }
 
@@ -19,7 +19,7 @@ export default class extends Model {
   }
 
   get fileURL() {
-    if (this.file['view-key']) {
+    if (this.file && this.file['view-key']) {
       return `http://0.0.0.0:8000/api/download?key=${this.file['view-key']}`;
     }
 

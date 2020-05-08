@@ -1,9 +1,8 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 
-export default Controller.extend({
-  actions: {
-    add(item) {
-      this.store.callResourceAction('POST', 'items', item.get('id'), 'add', {});
-    }
+export default class extends Controller {
+  @action add(item) {
+    this.store.callResourceAction('POST', 'items', item.id, 'add', {});
   }
-});
+}

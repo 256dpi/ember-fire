@@ -14,7 +14,7 @@
   <p>
     <label>Blob</label><br>
 
-    <FileUpload @name="blob" @accept="image/*" @onfileadd={{action "store" "blob"}}>
+    <FileUpload @name="blob" @accept="image/*" @onfileadd={{this.storeBlob}}>
       {{#if this.model.blobURL}}
         <img src={{this.model.blobURL}} height="100" alt="...">
       {{else}}
@@ -23,7 +23,7 @@
     </FileUpload>
 
     {{#if this.model.blobURL}}
-      <button type="button" {{action "unset" "blob" "blob"}}>
+      <button type="button" {{on "click" this.unsetBlob}}>
         Unset
       </button>
     {{/if}}
@@ -32,7 +32,7 @@
   <p>
     <label>File</label><br>
 
-    <FileUpload @name="file" @accept="image/*" @onfileadd={{action "upload" "file"}}>
+    <FileUpload @name="file" @accept="image/*" @onfileadd={{this.uploadFile}}>
       {{#if this.previews.file}}
         <img src={{this.previews.file}} height="100" alt="...">
       {{else if this.model.fileURL}}
@@ -43,7 +43,7 @@
     </FileUpload>
 
     {{#if (or this.previews.file this.model.fileURL)}}
-      <button type="button" {{action "unset" "file" "file"}}>
+      <button type="button" {{on "click" this.unsetFile}}>
         Unset
       </button>
     {{/if}}

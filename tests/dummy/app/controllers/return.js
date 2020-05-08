@@ -1,7 +1,14 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  queryParams: ['error', 'error_description', 'state', 'code', 'access_token'],
+export default class extends Controller {
+  queryParams = ['error', 'error_description', 'state', 'code', 'access_token'];
+
+  @tracked error;
+  @tracked error_description;
+  @tracked state;
+  @tracked code;
+  @tracked access_token;
 
   prepare() {
     // set parameters from fragment
@@ -10,4 +17,4 @@ export default Controller.extend({
       this.set(pair[0], pair[1]);
     }
   }
-});
+}
