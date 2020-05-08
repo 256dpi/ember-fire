@@ -4,6 +4,8 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import AutomaticRollback from '@256dpi/ember-fire/mixins/automatic-rollback';
 
 export default Route.extend(AuthenticatedRouteMixin, AutomaticRollback, {
+  authenticationRoute: 'sign-in',
+
   model(params) {
     return this.store.findRecord('item', params['item_id']);
   },

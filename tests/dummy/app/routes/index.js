@@ -3,6 +3,8 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import { hash } from 'rsvp';
 
 export default Route.extend(AuthenticatedRouteMixin, {
+  authenticationRoute: 'sign-in',
+
   model() {
     return hash({
       items: this.store.findAll('item'),
