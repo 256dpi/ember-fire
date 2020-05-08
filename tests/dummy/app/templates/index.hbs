@@ -20,22 +20,27 @@
     {{#each this.model.items as |item|}}
       <tr>
         <td>{{item.name}}</td>
+
         <td>{{item.count}}</td>
+
         <td>
           {{#if item.blobURL}}
             <img src={{item.blobURL}} height="100" alt="...">
           {{/if}}
         </td>
+
         <td>
           {{#if item.fileURL}}
             <img src={{item.fileURL}} height="100" alt="...">
           {{/if}}
         </td>
+
         <td>
-          <button type="button" {{action "add" item}}>
+          <button type="button" {{on "click" (fn this.add item)}}>
             Add
           </button>
         </td>
+
         <td>
           <LinkTo @route="edit" @model={{item}}>Edit</LinkTo>
         </td>

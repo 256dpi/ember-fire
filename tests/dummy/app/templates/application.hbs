@@ -4,15 +4,15 @@
   <LinkTo @route="index">Index</LinkTo>
 
   {{#if this.session.isAuthenticated}}
-    <button type="button" {{action "signOut"}}>Sign Out</button>
+    <button type="button" {{on "click" this.signOut}}>Sign Out</button>
     <span>User: {{this.user.model.name}}</span>
     <span>Watch: {{this.watch.connected}}</span>
   {{else}}
     <LinkTo @route="sign-in">Sign In</LinkTo>
   {{/if}}
 
-  <button type="button" {{action "authorize" "token"}}>Authorize Token</button>
-  <button type="button" {{action "authorize" "code"}}>Authorize Code</button>
+  <button type="button" {{on "click" (fn this.authorize "token")}}>Authorize Token</button>
+  <button type="button" {{on "click" (fn this.authorize "code")}}>Authorize Code</button>
 </p>
 
 {{outlet}}

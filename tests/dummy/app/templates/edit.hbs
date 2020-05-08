@@ -3,12 +3,12 @@
 <form {{action "update" on="submit"}}>
   <p>
     <label>Name</label>
-    <Input @value={{this.model.name}} placeholder="Name"/>
+    <Input @value={{this.model.name}} required placeholder="Name" />
   </p>
 
   <p>
     <label>State</label>
-    <Input @type="checkbox" @checked={{this.model.state}}/>
+    <Input @type="checkbox" @checked={{this.model.state}} />
   </p>
 
   <p>
@@ -54,7 +54,7 @@
   {{/if}}
 
   <p>
-    <button type="button" {{action "update"}}>
+    <button type="submit">
       Update
     </button>
 
