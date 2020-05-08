@@ -21,14 +21,14 @@ export default Service.extend({
   /**
    * The data read from the access token.
    */
-  data: computed('session.isAuthenticated', function() {
+  data: computed('session.{isAuthenticated,data.authenticated.access_token}', function() {
     // check authentication
-    if (!this.get('session.isAuthenticated')) {
+    if (!this.session.isAuthenticated) {
       return null;
     }
 
     // get access token
-    let data = jwtDecode(this.get('session.data.authenticated.access_token'));
+    let data = jwtDecode(this.session.data.authenticated.access_token);
 
     return EmberObject.create(data['dat']);
   }),
@@ -36,9 +36,9 @@ export default Service.extend({
   /**
    * The user model retrieved from the access token.
    */
-  model: computed('data', function() {
+  model: computed('data', 'userModel', 'dataKey', function() {
     // get data
-    let data = this.get('data');
+    let data = this.data;
 
     // check existence
     if (!data) {
@@ -47,7 +47,7 @@ export default Service.extend({
 
     // find user
     return DS.PromiseObject.create({
-      promise: this.get('store').findRecord(this.get('userModel'), data.get(this.get('dataKey')))
+      promise: this.store.findRecord(this.userModel, data.get(this.dataKey))
     });
   }),
 

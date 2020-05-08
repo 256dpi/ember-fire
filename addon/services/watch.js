@@ -55,7 +55,7 @@ export default Service.extend({
     model.unloadRecord();
 
     // transition to root
-    this.get('routing').transitionTo('application');
+    this.routing.transitionTo('application');
   },
 
   /**
@@ -272,13 +272,13 @@ export default Service.extend({
   handleCreate(model, id) {
     // load record with a small delay
     setTimeout(() => {
-      this.get('store').findRecord(model, id);
+      this.store.findRecord(model, id);
     }, 500);
   },
 
   handleUpdate(model, id) {
     // get saved record
-    let record = this.get('store').peekRecord(model, id);
+    let record = this.store.peekRecord(model, id);
 
     // ignore not loaded records
     if (!record) {
@@ -302,7 +302,7 @@ export default Service.extend({
 
   handleDelete(model, id) {
     // get saved record
-    let record = this.get('store').peekRecord(model, id);
+    let record = this.store.peekRecord(model, id);
 
     // ignore not loaded records
     if (!record) {
