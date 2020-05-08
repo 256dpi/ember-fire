@@ -1,8 +1,7 @@
-import Service from '@ember/service';
+import Service, { inject } from '@ember/service';
 import { observer } from '@ember/object';
 import { on } from '@ember/object/evented';
 import { singularize } from 'ember-inflector';
-import { inject } from '@ember/service';
 
 import ReconnectingWebsocket from 'reconnecting-websocket';
 

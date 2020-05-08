@@ -1,14 +1,14 @@
 <h2>Sign In</h2>
 
-<form {{action "authenticate" on="submit"}}>
+<form {{action "signIn" on="submit"}}>
   <p>
     <label>Email</label><br>
-    <Input @type="email" @value={{this.email}}/>
+    <Input @type="email" @value={{this.email}} required />
   </p>
 
   <p>
     <label>Password</label><br>
-    <Input @type="password" @value={{this.password}}/>
+    <Input @type="password" @value={{this.password}} required />
   </p>
 
   {{#if this.error}}
@@ -16,7 +16,7 @@
   {{/if}}
 
   <p>
-    <button type="submit" {{action "signIn"}}>
+    <button type="submit">
       Sign In
     </button>
   </p>
