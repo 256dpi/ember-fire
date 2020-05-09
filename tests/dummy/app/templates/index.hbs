@@ -24,14 +24,14 @@
         <td>{{item.count}}</td>
 
         <td>
-          {{#if item.blobURL}}
-            <img src={{item.blobURL}} height="100" alt="...">
+          {{#if item.blob}}
+            <img src={{item.blob.url}} height="100" alt="...">
           {{/if}}
         </td>
 
         <td>
-          {{#if item.fileURL}}
-            <img src={{item.fileURL}} height="100" alt="...">
+          {{#if item.file}}
+            <img src={{item.file.url}} height="100" alt="...">
           {{/if}}
         </td>
 

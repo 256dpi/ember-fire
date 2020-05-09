@@ -8,9 +8,4 @@ export default class extends Route.extend(AuthenticatedRouteMixin, AutomaticRoll
   model(params) {
     return this.store.findRecord('item', params['item_id']);
   }
-
-  setupController(controller, model) {
-    super.setupController(controller, model);
-    controller.reset();
-  }
 }
