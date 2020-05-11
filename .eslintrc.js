@@ -25,7 +25,8 @@ module.exports = {
     'ember/no-jquery': 'error', // TODO: Remove.
     'ember/no-mixins': 'warn', // TODO: Remove.
     'ember/no-new-mixins': 'warn', // TODO: Remove.
-    'ember/no-observers': 'warn' // TODO: Remove.
+    'ember/no-observers': 'warn', // TODO: Remove.
+    'ember/use-ember-data-rfc-395-imports': 'warn' // TODO: Remove.
   },
   overrides: [
     // node files
