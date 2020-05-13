@@ -5,4 +5,8 @@ export default class extends Controller {
   @action add(item) {
     this.store.callResourceAction('POST', 'items', item.id, 'add', {});
   }
+
+  @action generate(item) {
+    this.store.callResourceAction('POST', 'items', item.id, 'gen', {});
+  }
 }
