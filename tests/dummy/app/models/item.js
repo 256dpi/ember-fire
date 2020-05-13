@@ -4,7 +4,6 @@ export default class extends Model {
   @attr('string') name;
   @attr('boolean') state;
   @attr('number') count;
-  @attr('blob') blob;
   @attr('link') file;
   @attr('string') createToken;
   @attr('string') updateToken;

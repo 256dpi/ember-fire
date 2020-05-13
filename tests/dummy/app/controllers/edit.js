@@ -3,23 +3,12 @@ import BasicOperations from '@256dpi/ember-fire/mixins/basic-operations';
 import DetectUnload from '@256dpi/ember-fire/mixins/detect-unload';
 import { action } from '@ember/object';
 
-import { Blob } from '../transforms/blob';
 import { Link } from '../transforms/link';
 
 export default class extends Controller.extend(BasicOperations, DetectUnload) {
   afterUpdateRoute = 'index';
   afterDeleteRoute = 'index';
   afterUnloadRoute = 'index';
-
-  @action storeBlob(file) {
-    file.readAsBinaryString().then(bytes => {
-      this.model.blob = new Blob(file.blob.type, btoa(bytes));
-    });
-  }
-
-  @action unsetBlob() {
-    this.model.blob = null;
-  }
 
   @action uploadFile(file) {
     // get access token

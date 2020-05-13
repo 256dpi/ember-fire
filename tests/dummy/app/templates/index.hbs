@@ -9,7 +9,6 @@
     <tr>
       <th>Name</th>
       <th>Count</th>
-      <th>Blob</th>
       <th>File</th>
       <th></th>
       <th></th>
@@ -22,12 +21,6 @@
         <td>{{item.name}}</td>
 
         <td>{{item.count}}</td>
-
-        <td>
-          {{#if item.blob}}
-            <img src={{item.blob.url}} height="100" alt="...">
-          {{/if}}
-        </td>
 
         <td>
           {{#if item.file}}

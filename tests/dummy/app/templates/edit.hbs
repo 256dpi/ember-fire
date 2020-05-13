@@ -12,24 +12,6 @@
   </p>
 
   <p>
-    <label>Blob</label><br>
-
-    <FileUpload @name="blob" @accept="image/*" @onfileadd={{this.storeBlob}}>
-      {{#if (not-eq this.model.blob null)}}
-        <img src={{this.model.blob.url}} height="100" alt="...">
-      {{else}}
-        Upload
-      {{/if}}
-    </FileUpload>
-
-    {{#if (not-eq this.model.blob null)}}
-      <button type="button" {{on "click" this.unsetBlob}}>
-        Unset
-      </button>
-    {{/if}}
-  </p>
-
-  <p>
     <label>File</label><br>
 
     <FileUpload @name="file" @accept="image/*" @onfileadd={{this.uploadFile}}>
