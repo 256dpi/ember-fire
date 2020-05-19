@@ -6,6 +6,8 @@ export default class extends Model {
   @attr('string') type;
   @attr('number') length;
   @attr handle;
+  @attr('string') binding;
+  @attr('string') owner;
 
   get prettyHandle() {
     return JSON.stringify(this.handle, null, '  ');
