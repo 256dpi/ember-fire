@@ -169,6 +169,11 @@ export default Service.extend({
       // prepare url
       let url = this.watchURL;
 
+      // do not connect if url is missing
+      if (!url) {
+        return;
+      }
+
       // add access token if required
       if (this.requireAccessToken) {
         // get access token
