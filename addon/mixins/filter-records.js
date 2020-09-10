@@ -1,6 +1,6 @@
 import { Promise } from 'rsvp';
 import Mixin from '@ember/object/mixin';
-import DS from 'ember-data';
+import DS from 'ember-data'; // eslint-disable-line
 
 /**
  * FilterRecords is a Store mixin that allows filtering of records.

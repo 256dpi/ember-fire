@@ -1,6 +1,6 @@
 import Service, { inject as service } from '@ember/service';
 import EmberObject, { computed } from '@ember/object';
-import DS from 'ember-data';
+import DS from 'ember-data'; // eslint-disable-line
 
 import jwtDecode from 'jwt-decode';
 
