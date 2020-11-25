@@ -4,7 +4,7 @@ export default class extends Model {
   @attr('string') name;
   @attr('boolean') state;
   @attr('number') count;
-  @attr('link') file;
+  @attr('file-link') file;
   @attr('string') createToken;
   @attr('string') updateToken;
 }
