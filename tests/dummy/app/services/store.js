@@ -1,6 +1,3 @@
-import Store from '@ember-data/store';
+import Store from '@256dpi/ember-fire/services/store';
 
-import CustomActions from '@256dpi/ember-fire/mixins/custom-actions';
-import FilterRecords from '@256dpi/ember-fire/mixins/filter-records';
-
-export default Store.extend(CustomActions, FilterRecords);
+export default class extends Store {}
