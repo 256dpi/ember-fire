@@ -11,6 +11,21 @@
     <Input @type="checkbox" @checked={{this.model.state}} />
   </p>
 
+  <p>
+    <label>File</label><br>
+
+    {{#if this.model.file}}
+      <img src={{file-url this.model.file}} height="100" alt="...">
+      <button type="button" {{on "click" (fn this.files.unset this.model 'file')}}>
+        Unset
+      </button>
+    {{else}}
+      <FileUpload @name="file" @accept="image/*" @onfileadd={{fn this.files.upload this.model 'file' false}}>
+        Upload
+      </FileUpload>
+    {{/if}}
+  </p>
+
   {{#if this.error}}
     <p>{{this.error}}</p>
   {{/if}}

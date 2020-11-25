@@ -14,18 +14,15 @@
   <p>
     <label>File</label><br>
 
-    <FileUpload @name="file" @accept="image/*" @onfileadd={{fn this.files.upload this.model 'file' false}}>
-      {{#if (not-eq this.model.file null)}}
-        <img src={{file-url this.model.file}} height="100" alt="...">
-      {{else}}
-        Upload
-      {{/if}}
-    </FileUpload>
-
-    {{#if (not-eq this.model.file null)}}
+    {{#if this.model.file}}
+      <img src={{file-url this.model.file}} height="100" alt="...">
       <button type="button" {{on "click" (fn this.files.unset this.model 'file')}}>
         Unset
       </button>
+    {{else}}
+      <FileUpload @name="file" @accept="image/*" @onfileadd={{fn this.files.upload this.model 'file' false}}>
+        Upload
+      </FileUpload>
     {{/if}}
   </p>
 

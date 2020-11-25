@@ -102,6 +102,11 @@ export default class UploadService extends Service {
   }
 
   url(link) {
+    // check link
+    if(!link) {
+      return '';
+    }
+
     // check preview
     if (link.preview) {
       return link.preview;
