@@ -9,7 +9,8 @@ export default class extends Route.extend(AuthenticatedRouteMixin, AutomaticRoll
 
   model() {
     return this.store.createRecord('item', {
-      createToken: randomString()
+      createToken: randomString(),
+      updateToken: randomString()
     });
   }
 }
