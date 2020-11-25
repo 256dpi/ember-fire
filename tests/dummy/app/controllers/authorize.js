@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
-import { redirectPost } from '../utils';
+import { redirectPost } from '@256dpi/ember-fire/utils';
 
 export default class extends Controller {
   queryParams = ['client_id', 'response_type', 'scope', 'state', 'redirect_uri'];

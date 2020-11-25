@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { A } from '@ember/array';
 
-import { ref } from '../utils';
+import { makeRef } from '../utils';
 
 export class Link {
   @tracked ref = '';
@@ -63,7 +63,7 @@ export default class UploadService extends Service {
       let url = URL.createObjectURL(new Blob([buf], { type: file.blob.type }));
 
       // create link
-      let link = this.factory(ref(), file.blob.name, file.blob.type, file.blob.size, key, '');
+      let link = this.factory(makeRef(), file.blob.name, file.blob.type, file.blob.size, key, '');
       link.preview = url;
 
       // set link
@@ -103,7 +103,7 @@ export default class UploadService extends Service {
 
   url(link) {
     // check link
-    if(!link) {
+    if (!link) {
       return '';
     }
 
