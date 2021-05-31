@@ -1,9 +1,12 @@
 import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
 import { makeRef } from '@256dpi/ember-fire/utils';
 
 export default class extends Controller {
+  @service session;
+
   @action authorize(type) {
     // redirect to authorize endpoint
     let client = 'sub-key';

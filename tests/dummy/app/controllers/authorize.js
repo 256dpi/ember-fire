@@ -1,10 +1,13 @@
 import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 import { redirectPost } from '@256dpi/ember-fire/utils';
 
 export default class extends Controller {
+  @service session;
+
   queryParams = ['client_id', 'response_type', 'scope', 'state', 'redirect_uri'];
 
   @tracked client_id;

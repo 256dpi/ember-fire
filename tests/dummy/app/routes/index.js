@@ -1,7 +1,11 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
 
 export default class extends Route {
+  @service store;
+  @service session;
+
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'sign-in');
   }
