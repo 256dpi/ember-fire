@@ -14,12 +14,9 @@ ember install @256dpi/ember-fire
 
 - The [`Files`](https://github.com/256dpi/ember-fire/blob/master/addon/services/files.js) service handles uploads and
   downloads.
-
-- The [`Store`](https://github.com/256dpi/ember-fire/blob/master/addon/services/store.js) extends the default store.
-
+- The [`Store`](https://github.com/256dpi/ember-fire/blob/master/addon/services/store.js) service extends the default store.
 - The [`User`](https://github.com/256dpi/ember-fire/blob/master/addon/services/user.js) service loads the model of the
   currently authenticated user.
-
 - The [`Watch`](https://github.com/256dpi/ember-fire/blob/master/addon/services/watch.js) service manages resource
   watching.
 
