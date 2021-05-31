@@ -14,12 +14,12 @@ export default class extends Store {
   filterAll(model, filters) {
     // compute query
     let query = {};
-    Object.keys(filters).forEach(function(key) {
+    Object.keys(filters).forEach(function (key) {
       query['filter[' + key + ']'] = filters[key];
     });
 
     return DS.PromiseArray.create({
-      promise: this.query(model, query)
+      promise: this.query(model, query),
     });
   }
 
@@ -35,15 +35,15 @@ export default class extends Store {
       promise: new Promise((resolve, reject) => {
         // query endpoint
         this.filterAll(model, filters).then(
-          result => {
+          (result) => {
             // return first object on success
             resolve(result.objectAt(0));
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
-      })
+      }),
     });
   }
 
@@ -64,7 +64,7 @@ export default class extends Store {
 
     // make request
     return adapter.ajax(url, method, {
-      data
+      data,
     });
   }
 
@@ -86,7 +86,7 @@ export default class extends Store {
 
     // make request
     return adapter.ajax(url, method, {
-      data
+      data,
     });
   }
 
@@ -109,7 +109,7 @@ export default class extends Store {
 
     // make request
     return adapter.ajax(url, method, {
-      data
+      data,
     });
   }
 }

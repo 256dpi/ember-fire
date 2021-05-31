@@ -24,7 +24,7 @@ export default class extends Controller {
       response_type: this.response_type,
       scope: this.scope,
       state: this.state,
-      redirect_uri: this.redirect_uri
+      redirect_uri: this.redirect_uri,
     });
   }
 }

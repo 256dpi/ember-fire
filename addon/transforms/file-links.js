@@ -14,14 +14,14 @@ export default class FileLinksTransform extends Transform {
       return [];
     }
 
-    return files.map(files => {
+    return files.map((files) => {
       return {
         ref: files.ref,
         name: files.name,
         type: files.type,
         size: files.size,
         'claim-key': files.claimKey,
-        'view-key': files.viewKey
+        'view-key': files.viewKey,
       };
     });
   }
@@ -33,7 +33,7 @@ export default class FileLinksTransform extends Transform {
     }
 
     return A(
-      values.map(value => {
+      values.map((value) => {
         return this.factory(value.ref, value.name, value.type, value.size, value['claim-key'], value['view-key']);
       })
     );

@@ -80,7 +80,7 @@ export default class extends Component {
       transition.abort();
 
       // call abandon callback
-      this.args.abandon().then(ok => {
+      this.args.abandon().then((ok) => {
         if (ok) {
           // unload model and retry transition with pass through
           this.args.model.unloadRecord();
@@ -109,7 +109,7 @@ export default class extends Component {
       transition.abort();
 
       // call abandon callback
-      this.args.abandon().then(ok => {
+      this.args.abandon().then((ok) => {
         if (ok) {
           // rollback model and retry transition with pass through
           this.reset();

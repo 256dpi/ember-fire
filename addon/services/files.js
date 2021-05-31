@@ -47,13 +47,13 @@ export default class UploadService extends Service {
         contentType: file.blob.type,
         headers: {
           Authorization: `Bearer ${access_token}`,
-          'Content-Disposition': `attachment; filename="${file.blob.name}"`
-        }
+          'Content-Disposition': `attachment; filename="${file.blob.name}"`,
+        },
       });
 
       // get key
       let {
-        keys: [key]
+        keys: [key],
       } = JSON.parse(res.body);
 
       // read as url for preview

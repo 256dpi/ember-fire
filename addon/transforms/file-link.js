@@ -19,7 +19,7 @@ export default class FileLinkTransform extends Transform {
       type: file.type,
       size: file.size,
       'claim-key': file.claimKey,
-      'view-key': file.viewKey
+      'view-key': file.viewKey,
     };
   }
 

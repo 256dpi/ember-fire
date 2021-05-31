@@ -3,7 +3,7 @@ import { helper } from '@ember/component/helper';
 function confirm([msg, confirmed, declined]) {
   // check callback
   if (confirmed) {
-    return function() {
+    return function () {
       if (window.confirm(msg)) {
         confirmed();
       } else if (declined) {
@@ -12,7 +12,7 @@ function confirm([msg, confirmed, declined]) {
     };
   }
 
-  return async function() {
+  return async function () {
     return window.confirm(msg);
   };
 }

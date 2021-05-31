@@ -91,7 +91,7 @@ export default class extends Service {
 
     // prepare command
     let cmd = {
-      subscribe: {}
+      subscribe: {},
     };
 
     // add subscription
@@ -123,7 +123,7 @@ export default class extends Service {
 
     // prepare command
     let cmd = {
-      unsubscribe: [name]
+      unsubscribe: [name],
     };
 
     // send command
@@ -195,7 +195,7 @@ export default class extends Service {
       reconnectionDelayGrowFactor: 2,
       connectionTimeout: 4000,
       maxRetries: Infinity,
-      debug: false
+      debug: false,
     });
 
     // add connect listener
@@ -209,7 +209,7 @@ export default class extends Service {
     });
 
     // add message listener
-    ws.addEventListener('message', e => {
+    ws.addEventListener('message', (e) => {
       this.messageHandler(JSON.parse(e.data));
     });
 
@@ -231,11 +231,11 @@ export default class extends Service {
 
     // prepare subscription
     let cmd = {
-      subscribe: {}
+      subscribe: {},
     };
 
     // add sub
-    Object.keys(subscriptions).forEach(name => {
+    Object.keys(subscriptions).forEach((name) => {
       cmd.subscribe[name] = subscriptions[name];
     });
 
@@ -250,9 +250,9 @@ export default class extends Service {
 
   messageHandler(data) {
     // go through all models
-    Object.keys(data).forEach(name => {
+    Object.keys(data).forEach((name) => {
       // go through all ids
-      Object.keys(data[name]).forEach(id => {
+      Object.keys(data[name]).forEach((id) => {
         // get singular model name
         let model = singularize(name);
 

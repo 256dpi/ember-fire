@@ -52,7 +52,7 @@ export default class extends Service {
 
     // find user
     return DS.PromiseObject.create({
-      promise: this.store.findRecord(this.userModel, data.get(this.dataKey))
+      promise: this.store.findRecord(this.userModel, data.get(this.dataKey)),
     });
   }
 }

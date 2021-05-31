@@ -10,7 +10,7 @@ export default class extends Route {
   model() {
     return this.store.createRecord('item', {
       createToken: makeRef(),
-      updateToken: makeRef()
+      updateToken: makeRef(),
     });
   }
 }

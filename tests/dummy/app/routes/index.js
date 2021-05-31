@@ -11,7 +11,7 @@ export default class extends Route {
       items: this.store.findAll('item'),
       values: this.store.findAll('value'),
       files: this.store.findAll('file'),
-      jobs: this.store.findAll('job')
+      jobs: this.store.findAll('job'),
     });
   }
 }

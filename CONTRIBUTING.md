@@ -10,9 +10,8 @@ Follow the below steps to setup a development environment.
 
 ## Linting
 
-* `yarn lint:hbs`
-* `yarn lint:js`
-* `yarn lint:js --fix`
+* `yarn lint`
+* `yarn lint:fix`
 
 ## Running tests
 
