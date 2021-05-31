@@ -2,13 +2,13 @@
 
 <form {{on "submit" (prevent-default this.signIn)}}>
   <p>
-    <label>Email</label><br>
-    <Input @type="email" @value={{this.email}} required />
+    <label for="email">Email</label><br>
+    <Input id="email" @type="email" @value={{this.email}} required />
   </p>
 
   <p>
-    <label>Password</label><br>
-    <Input @type="password" @value={{this.password}} required />
+    <label for="password">Password</label><br>
+    <Input id="password" @type="password" @value={{this.password}} required />
   </p>
 
   {{#if this.error}}

@@ -1,5 +1,5 @@
 import Service, { inject as service } from '@ember/service';
-import EmberObject, { computed } from '@ember/object';
+import EmberObject, { computed } from '@ember/object'; // eslint-disable-line
 import DS from 'ember-data'; // eslint-disable-line
 
 import jwtDecode from 'jwt-decode';
@@ -24,7 +24,7 @@ export default class extends Service {
   /**
    * The data read from the access token.
    */
-  @computed('session.{isAuthenticated,data.authenticated.access_token}')
+  @computed('session.{isAuthenticated,data.authenticated.access_token}') // eslint-disable-line
   get data() {
     // check authentication
     if (!this.session.isAuthenticated) {

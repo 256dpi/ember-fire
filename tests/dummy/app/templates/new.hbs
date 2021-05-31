@@ -7,13 +7,13 @@
   @onAbandon={{true}}
 >
   <p>
-    <label>Name</label>
-    <Input @value={{this.model.name}} required placeholder="Name" />
+    <label for="name">Name</label>
+    <Input id="name" @value={{this.model.name}} required placeholder="Name" />
   </p>
 
   <p>
-    <label>State</label>
-    <Input @type="checkbox" @checked={{this.model.state}} />
+    <label for="state">State</label>
+    <Input id="state" @type="checkbox" @checked={{this.model.state}} />
   </p>
 
   <p>
