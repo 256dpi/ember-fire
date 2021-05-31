@@ -1,6 +1,4 @@
-import Service, { inject } from '@ember/service';
-import { observer } from '@ember/object';
-import { on } from '@ember/object/evented';
+import Service, { inject as service } from '@ember/service';
 import { singularize } from 'ember-inflector';
 
 import ReconnectingWebsocket from 'reconnecting-websocket';
@@ -8,23 +6,26 @@ import ReconnectingWebsocket from 'reconnecting-websocket';
 /**
  * The Watch service manages resource watching.
  */
-export default Service.extend({
+export default class extends Service {
+  @service store;
+  @service session;
+
   /**
    * The main watch URL for the websocket to connect to.
    *
    * @example 'wss://example.org/api/watch'
    */
-  watchURL: undefined,
+  watchURL = undefined;
 
   /**
    * This setting controls whether the watch endpoint requires authentication using an access token.
    */
-  requireAccessToken: true,
+  requireAccessToken = true;
 
   /**
    * Is set to true if the websocket is successfully.
    */
-  connected: false,
+  connected = false;
 
   /**
    * The callback that is called to handle updates of dirty models.
@@ -38,7 +39,7 @@ export default Service.extend({
     // rollback and reload
     model.rollbackAttributes();
     model.reload();
-  },
+  }
 
   /**
    * The callback that is called to handle deletion of of dirty models.
@@ -56,7 +57,7 @@ export default Service.extend({
 
     // transition to root
     this.routing.transitionTo('application');
-  },
+  }
 
   /**
    * Subscribe will cache and issue the provided subscription.
@@ -95,7 +96,7 @@ export default Service.extend({
 
     // send command
     ws.send(JSON.stringify(cmd));
-  },
+  }
 
   /**
    * Unsubscribe will unsubscribe the subscription associated with the provided key.
@@ -124,95 +125,94 @@ export default Service.extend({
 
     // send command
     ws.send(JSON.stringify(cmd));
-  },
+  }
 
   /* private */
 
-  session: inject(),
-  store: inject(),
+  websocket = null;
 
-  websocket: null,
-
-  init() {
-    // call super
-    this._super(...arguments);
+  constructor() {
+    super(...arguments);
 
     // initialize subscriptions
     this.set('subscriptions', {});
-  },
 
-  _initializer: on(
-    'init',
-    observer('session.isAuthenticated', function() {
-      // asses whether a connection should be made
-      let connect = !this.requireAccessToken || this.session.isAuthenticated;
+    // initialize
+    this.initialize();
 
-      // get current websocket
-      let ws = this.websocket;
+    // add observer
+    this.addObserver('session.isAuthenticated', this, this.initialize);
+  }
 
-      // handle case where we should not be connected (no authenticated)
-      if (!connect) {
-        // close current websocket if existing
-        if (ws) {
-          ws.close();
-          this.set('websocket', null);
-        }
+  initialize() {
+    // asses whether a connection should be made
+    let connect = !this.requireAccessToken || this.session.isAuthenticated;
 
-        return;
-      }
+    // get current websocket
+    let ws = this.websocket;
 
-      // return if we are already connected
+    // handle case where we should not be connected (no authenticated)
+    if (!connect) {
+      // close current websocket if existing
       if (ws) {
-        return;
+        ws.close();
+        this.set('websocket', null);
       }
 
-      // prepare url
-      let url = this.watchURL;
+      return;
+    }
 
-      // do not connect if url is missing
-      if (!url) {
-        return;
-      }
+    // return if we are already connected
+    if (ws) {
+      return;
+    }
 
-      // add access token if required
-      if (this.requireAccessToken) {
-        // get access token
-        let at = this.session.data.authenticated.access_token;
+    // prepare url
+    let url = this.watchURL;
 
-        // add to url
-        url += `?access_token=${at}`;
-      }
+    // do not connect if url is missing
+    if (!url) {
+      return;
+    }
 
-      // create new websocket
-      ws = new ReconnectingWebsocket(url, [], {
-        maxReconnectionDelay: 5000,
-        minReconnectionDelay: 50,
-        minUptime: 5000,
-        reconnectionDelayGrowFactor: 2,
-        connectionTimeout: 4000,
-        maxRetries: Infinity,
-        debug: false
-      });
+    // add access token if required
+    if (this.requireAccessToken) {
+      // get access token
+      let at = this.session.data.authenticated.access_token;
 
-      // add connect listener
-      ws.addEventListener('open', () => {
-        this.openHandler();
-      });
+      // add to url
+      url += `?access_token=${at}`;
+    }
 
-      // add close listener
-      ws.addEventListener('close', () => {
-        this.closeHandler();
-      });
+    // create new websocket
+    ws = new ReconnectingWebsocket(url, [], {
+      maxReconnectionDelay: 5000,
+      minReconnectionDelay: 50,
+      minUptime: 5000,
+      reconnectionDelayGrowFactor: 2,
+      connectionTimeout: 4000,
+      maxRetries: Infinity,
+      debug: false
+    });
 
-      // add message listener
-      ws.addEventListener('message', e => {
-        this.messageHandler(JSON.parse(e.data));
-      });
+    // add connect listener
+    ws.addEventListener('open', () => {
+      this.openHandler();
+    });
 
-      // save websocket
-      this.set('websocket', ws);
-    })
-  ),
+    // add close listener
+    ws.addEventListener('close', () => {
+      this.closeHandler();
+    });
+
+    // add message listener
+    ws.addEventListener('message', e => {
+      this.messageHandler(JSON.parse(e.data));
+    });
+
+    // save websocket
+    this.set('websocket', ws);
+  }
 
   openHandler() {
     // set flag
@@ -238,12 +238,12 @@ export default Service.extend({
 
     // send subscription
     ws.send(JSON.stringify(cmd));
-  },
+  }
 
   closeHandler() {
     // set flag
     this.set('connected', false);
-  },
+  }
 
   messageHandler(data) {
     // go through all models
@@ -257,7 +257,7 @@ export default Service.extend({
         this.handleEvent(model, id, data[name][id]);
       });
     });
-  },
+  }
 
   handleEvent(model, id, operation) {
     // check event operation
@@ -272,14 +272,14 @@ export default Service.extend({
         this.handleDelete(model, id);
         break;
     }
-  },
+  }
 
   handleCreate(model, id) {
     // load record with a small delay
     setTimeout(() => {
       this.store.findRecord(model, id);
     }, 500);
-  },
+  }
 
   handleUpdate(model, id) {
     // get saved record
@@ -303,7 +303,7 @@ export default Service.extend({
 
     // offload dirty update handling
     this.handleDirtyUpdate(record);
-  },
+  }
 
   handleDelete(model, id) {
     // get saved record
@@ -329,4 +329,4 @@ export default Service.extend({
     // offload dirty delete handling
     this.handleDirtyDelete(record);
   }
-});
+}
