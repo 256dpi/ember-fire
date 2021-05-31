@@ -14,19 +14,22 @@ export default class extends Service {
   @service session;
 
   /**
-   * The main watch URL for the websocket to connect to.
+   * Returns the main watch URL for the websocket to connect to.
    *
-   * @type {string|undefined}
-   * @example 'wss://example.org/api/watch'
+   * @return {string|undefined}
    */
-  watchURL = undefined;
+  get watchURL() {
+    return undefined;
+  }
 
   /**
-   * This setting controls whether the watch endpoint requires authentication using an access token.
+   * Returns whether the watch endpoint requires authentication using an access token.
    *
-   * @type {boolean}
+   * @return {boolean}
    */
-  requireAccessToken = true;
+  get requireAccessToken() {
+    return true;
+  }
 
   /**
    * Is set to true if the websocket is successfully.
@@ -75,35 +78,28 @@ export default class extends Service {
    * @param replace {boolean}
    */
   subscribe(name, data = {}, replace = true) {
-    // get subscriptions
-    let subscriptions = this.subscriptions;
-
     // return if subscription exists and should not be replaced
-    if (!replace && subscriptions[name]) {
+    if (!replace && this.subscriptions[name]) {
       return;
     }
 
     // store subscription
-    subscriptions[name] = data;
+    this.subscriptions[name] = data;
 
-    // get websocket
-    let ws = this.websocket;
-
-    // return if not available
-    if (!ws || !this.connected) {
+    // return if not connected
+    if (!this.connected) {
       return;
     }
 
     // prepare command
     let cmd = {
-      subscribe: {},
+      subscribe: {
+        [name]: data,
+      },
     };
 
-    // add subscription
-    cmd.subscribe[name] = data;
-
     // send command
-    ws.send(JSON.stringify(cmd));
+    this.websocket.send(JSON.stringify(cmd));
   }
 
   /**
@@ -112,17 +108,11 @@ export default class extends Service {
    * @param name {string}
    */
   unsubscribe(name) {
-    // get subscriptions
-    let subscriptions = this.subscriptions;
-
     // delete subscription
-    delete subscriptions[name];
+    delete this.subscriptions[name];
 
-    // get websocket
-    let ws = this.websocket;
-
-    // return if not available
-    if (!ws || !this.connected) {
+    // return if not connected
+    if (!this.connected) {
       return;
     }
 
@@ -132,38 +122,33 @@ export default class extends Service {
     };
 
     // send command
-    ws.send(JSON.stringify(cmd));
+    this.websocket.send(JSON.stringify(cmd));
   }
 
   /* private */
 
   websocket = null;
+  subscriptions = {};
 
   constructor() {
     super(...arguments);
 
-    // initialize subscriptions
-    this.subscriptions = {};
+    // add observer
+    this.addObserver('session.isAuthenticated', this, this.initialize); // eslint-disable-line
 
     // initialize
     this.initialize();
-
-    // add observer
-    this.addObserver('session.isAuthenticated', this, this.initialize); // eslint-disable-line
   }
 
   initialize() {
     // asses whether a connection should be made
     let connect = !this.requireAccessToken || this.session.isAuthenticated;
 
-    // get current websocket
-    let ws = this.websocket;
-
     // handle case where we should not be connected (no authenticated)
     if (!connect) {
       // close current websocket if existing
-      if (ws) {
-        ws.close();
+      if (this.websocket) {
+        this.websocket.close();
         this.websocket = null;
       }
 
@@ -171,11 +156,11 @@ export default class extends Service {
     }
 
     // return if we are already connected
-    if (ws) {
+    if (this.websocket) {
       return;
     }
 
-    // prepare url
+    // copy url
     let url = this.watchURL;
 
     // do not connect if url is missing
@@ -185,15 +170,11 @@ export default class extends Service {
 
     // add access token if required
     if (this.requireAccessToken) {
-      // get access token
-      let at = this.session.data.authenticated.access_token;
-
-      // add to url
-      url += `?access_token=${at}`;
+      url += `?access_token=${this.session.data.authenticated.access_token}`;
     }
 
     // create new websocket
-    ws = new ReconnectingWebsocket(url, [], {
+    this.websocket = new ReconnectingWebsocket(url, [], {
       maxReconnectionDelay: 5000,
       minReconnectionDelay: 50,
       minUptime: 5000,
@@ -204,48 +185,37 @@ export default class extends Service {
     });
 
     // add connect listener
-    ws.addEventListener('open', () => {
+    this.websocket.addEventListener('open', () => {
       this.openHandler();
     });
 
     // add close listener
-    ws.addEventListener('close', () => {
+    this.websocket.addEventListener('close', () => {
       this.closeHandler();
     });
 
     // add message listener
-    ws.addEventListener('message', (e) => {
+    this.websocket.addEventListener('message', (e) => {
       this.messageHandler(JSON.parse(e.data));
     });
-
-    // save websocket
-    this.websocket = ws;
   }
 
   openHandler() {
     // set flag
     this.connected = true;
 
-    // resubscribe cached subscriptions
-
-    // get subscriptions
-    let subscriptions = this.subscriptions;
-
-    // get websocket
-    let ws = this.websocket;
-
     // prepare subscription
     let cmd = {
       subscribe: {},
     };
 
-    // add sub
-    Object.keys(subscriptions).forEach((name) => {
-      cmd.subscribe[name] = subscriptions[name];
+    // add subscriptions
+    Object.keys(this.subscriptions).forEach((name) => {
+      cmd.subscribe[name] = this.subscriptions[name];
     });
 
     // send subscription
-    ws.send(JSON.stringify(cmd));
+    this.websocket.send(JSON.stringify(cmd));
   }
 
   closeHandler() {
