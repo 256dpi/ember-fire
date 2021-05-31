@@ -16,24 +16,29 @@ export default class extends Service {
   /**
    * The main watch URL for the websocket to connect to.
    *
+   * @type {string|undefined}
    * @example 'wss://example.org/api/watch'
    */
   watchURL = undefined;
 
   /**
    * This setting controls whether the watch endpoint requires authentication using an access token.
+   *
+   * @type {boolean}
    */
   requireAccessToken = true;
 
   /**
    * Is set to true if the websocket is successfully.
+   *
+   * @type {boolean}
    */
   @tracked connected = false;
 
   /**
    * The callback that is called to handle updates of dirty models.
    *
-   * @param model The model.
+   * @param model {Model}
    */
   handleDirtyUpdate(model) {
     // ask to continue
@@ -47,7 +52,7 @@ export default class extends Service {
   /**
    * The callback that is called to handle deletion of of dirty models.
    *
-   * @param model The model.
+   * @param model {Model}.
    */
   handleDirtyDelete(model) {
     // inform
@@ -65,9 +70,9 @@ export default class extends Service {
   /**
    * Subscribe will cache and issue the provided subscription.
    *
-   * @param name The subscription name.
-   * @param data The custom data object.
-   * @param replace Whether a cached subscription should be replaced.
+   * @param name {string}
+   * @param data {Object}
+   * @param replace {boolean}
    */
   subscribe(name, data = {}, replace = true) {
     // get subscriptions
@@ -104,7 +109,7 @@ export default class extends Service {
   /**
    * Unsubscribe will unsubscribe the subscription associated with the provided key.
    *
-   * @param name The subscription name.
+   * @param name {string}
    */
   unsubscribe(name) {
     // get subscriptions

@@ -7,9 +7,9 @@ export default class extends Store {
   /**
    * Will find multiple models using the provided filters.
    *
-   * @param model The name of the model.
-   * @param filters The filter attributes.
-   * @returns {DS.PromiseArray}
+   * @param model {string}
+   * @param filters {Object}
+   * @return {PromiseArray}
    */
   filterAll(model, filters) {
     // compute query
@@ -26,9 +26,9 @@ export default class extends Store {
   /**
    * Will find a single model using the provided filters.
    *
-   * @param model The name of the model.
-   * @param filters The filter attributes.
-   * @returns {DS.PromiseObject}
+   * @param model {string}
+   * @param filters {Object}
+   * @return {PromiseObject}
    */
   filterRecord(model, filters) {
     return DS.PromiseObject.create({
@@ -50,10 +50,10 @@ export default class extends Store {
   /**
    * Call the specified group action.
    *
-   * @param method The HTTP method.
-   * @param action The action name.
-   * @param data The data for POST, PUT and PATCH requests.
-   * @returns {Promise}
+   * @param method {string}
+   * @param action {string}
+   * @param data {Object}
+   * @return {Promise}
    */
   callGroupAction(method, action, data = {}) {
     // get adapter
@@ -71,11 +71,11 @@ export default class extends Store {
   /**
    * Calls the specified collection action.
    *
-   * @param method The HTTP method.
-   * @param name The model name.
-   * @param action The action name.
-   * @param data The data for POST, PUT and PATCH requests.
-   * @returns {Promise}
+   * @param method {string}
+   * @param name {string}
+   * @param action {string}
+   * @param data {Object}
+   * @return {Promise}
    */
   callCollectionAction(method, name, action, data = {}) {
     // get adapter
@@ -93,12 +93,12 @@ export default class extends Store {
   /**
    * Calls the specified resource action.
    *
-   * @param method THe HTTP method.
-   * @param name The model name.
-   * @param id The model id.
-   * @param action The action name.
-   * @param data The data for POST, PUT and PATCH requests.
-   * @returns {Promise}
+   * @param method {string}
+   * @param name {string}
+   * @param id {string}
+   * @param action {string}
+   * @param data {Object}
+   * @return {Promise}
    */
   callResourceAction(method, name, id, action, data = {}) {
     // get adapter

@@ -4,9 +4,16 @@ import { A } from '@ember/array';
 import { Link } from '../services/files';
 
 export default class FileLinksTransform extends Transform {
+  /**
+   * The factory used to create a new link object.
+   *
+   * @return {Link}
+   */
   factory() {
     return new Link(...arguments);
   }
+
+  /* private */
 
   serialize(files) {
     // check null

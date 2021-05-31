@@ -13,16 +13,22 @@ export default class extends Service {
 
   /**
    * The key used in the data object of the token claim to store the user id.
+   *
+   * @type {string}
    */
   dataKey = 'extra.user';
 
   /**
    * The name of the model that should be loaded.
+   *
+   * @type {string}
    */
   userModel = 'user';
 
   /**
    * The data read from the access token.
+   *
+   * @return {Object}
    */
   @computed('session.{isAuthenticated,data.authenticated.access_token}') // eslint-disable-line
   get data() {
@@ -39,6 +45,8 @@ export default class extends Service {
 
   /**
    * The user model retrieved from the access token.
+   *
+   * @return {Model}
    */
   @computed('data', 'userModel', 'dataKey')
   get model() {

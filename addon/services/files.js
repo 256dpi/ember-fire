@@ -6,6 +6,9 @@ import { A } from '@ember/array';
 
 import { makeRef } from '../utils';
 
+/**
+ * The common link model.
+ */
 export class Link {
   @tracked ref = '';
   @tracked name = '';
@@ -29,13 +32,38 @@ export default class UploadService extends Service {
   @service store;
   @service session;
 
+  /**
+   * The factory used to create a new link object.
+   *
+   * @return {Link}
+   */
   factory() {
     return new Link(...arguments);
   }
 
+  /**
+   * The URL used for uploads.
+   *
+   * @type {string}
+   */
   uploadURL = '';
+
+  /**
+   * The URL used for downloads.
+   *
+   * @type {string}
+   */
   downloadURL = '';
 
+  /**
+   * Upload will upload the specified file and set or add a link to the provided model.
+   *
+   * @param model {Model}
+   * @param field {string}
+   * @param multiple {boolean}
+   * @param file {File}
+   * @return {Promise<void>}
+   */
   @action
   async upload(model, field, multiple, file) {
     // get access token
@@ -89,18 +117,37 @@ export default class UploadService extends Service {
     }
   }
 
+  /**
+   * Unset will unset the specified link.
+   *
+   * @param model {Model}
+   * @param field {string}
+   */
   @action
   unset(model, field) {
     // unset link
     model.set(field, null);
   }
 
+  /**
+   * Remove will remove the specified link.
+   *
+   * @param model {Model}
+   * @param field {string}
+   * @param link {Link}
+   */
   @action
   remove(model, field, link) {
     // remove link
     model.set(field, model.get(field).without(link));
   }
 
+  /**
+   * Return an URL for the specified link.
+   *
+   * @param link {Link}
+   * @return {string}
+   */
   url(link) {
     // check link
     if (!link) {
