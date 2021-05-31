@@ -1,7 +1,4 @@
 import Store from '@ember-data/store';
-import DS from 'ember-data'; // eslint-disable-line
-
-// TODO: Support non JSON action responses?
 
 export default class extends Store {
   /**
@@ -9,7 +6,7 @@ export default class extends Store {
    *
    * @param model {string}
    * @param filters {Object}
-   * @return {PromiseArray}
+   * @return {Promise<[Model]>}
    */
   filterAll(model, filters) {
     // compute query
@@ -18,9 +15,7 @@ export default class extends Store {
       query['filter[' + key + ']'] = filters[key];
     });
 
-    return DS.PromiseArray.create({
-      promise: this.query(model, query),
-    });
+    return this.query(model, query);
   }
 
   /**
@@ -28,22 +23,20 @@ export default class extends Store {
    *
    * @param model {string}
    * @param filters {Object}
-   * @return {PromiseObject}
+   * @return {Promise<Model>}
    */
   filterRecord(model, filters) {
-    return DS.PromiseObject.create({
-      promise: new Promise((resolve, reject) => {
-        // query endpoint
-        this.filterAll(model, filters).then(
-          (result) => {
-            // return first object on success
-            resolve(result.objectAt(0));
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-      }),
+    return new Promise((resolve, reject) => {
+      // query endpoint
+      this.filterAll(model, filters).then(
+        (result) => {
+          // return first object on success
+          resolve(result.objectAt(0));
+        },
+        (err) => {
+          reject(err);
+        }
+      );
     });
   }
 
@@ -53,7 +46,7 @@ export default class extends Store {
    * @param method {string}
    * @param action {string}
    * @param data {Object}
-   * @return {Promise}
+   * @return {Promise<Object>}
    */
   callGroupAction(method, action, data = {}) {
     // get adapter
@@ -75,7 +68,7 @@ export default class extends Store {
    * @param name {string}
    * @param action {string}
    * @param data {Object}
-   * @return {Promise}
+   * @return {Promise<Object>}
    */
   callCollectionAction(method, name, action, data = {}) {
     // get adapter
@@ -98,7 +91,7 @@ export default class extends Store {
    * @param id {string}
    * @param action {string}
    * @param data {Object}
-   * @return {Promise}
+   * @return {Promise<Object>}
    */
   callResourceAction(method, name, id, action, data = {}) {
     // get adapter
