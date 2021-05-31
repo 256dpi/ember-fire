@@ -1,6 +1,12 @@
 <h2>Edit Item</h2>
 
-<form {{action "update" on="submit"}}>
+<Form
+  @model={{this.model}}
+  @cancel={{transition "index"}}
+  @abandon={{confirm "Abandon?"}}
+  @submit={{chain (save-model this.model) (transition "index")}}
+  @delete={{confirm "Delete?" (chain (delete-model this.model) (transition "index"))}}
+>
   <p>
     <label>Name</label>
     <Input @value={{this.model.name}} required placeholder="Name" />
@@ -25,18 +31,4 @@
       </FileUpload>
     {{/if}}
   </p>
-
-  {{#if this.error}}
-    <p>{{this.error}}</p>
-  {{/if}}
-
-  <p>
-    <button type="submit">
-      Update
-    </button>
-
-    <button type="button" {{action "delete"}}>
-      Delete
-    </button>
-  </p>
-</form>
+</Form>

@@ -1,0 +1,33 @@
+<form {{on "submit" (prevent-default @submit)}}>
+  {{yield}}
+
+  <p>
+    <button type="submit" class="button" disabled={{or (not this.dirty) @model.isSaving}}>
+      {{#if @model.isSaving}}
+        Saving...
+      {{else if @model.isNew}}
+        Create
+      {{else}}
+        Update
+      {{/if}}
+    </button>
+
+    {{#unless @model.isNew}}
+      <button type="button" class="button" {{on "click" this.reset}} disabled={{or (not this.dirty) @model.isSaving}}>
+        Reset
+      </button>
+    {{/unless}}
+
+    {{#if @cancel}}
+      <button type="button" class="button" {{on "click" this.cancel}} disabled={{@model.isSaving}}>
+        Cancel
+      </button>
+    {{/if}}
+
+    {{#if @delete}}
+      <button type="button" class="button" {{on "click" @delete}} disabled={{@model.isSaving}}>
+        Delete
+      </button>
+    {{/if}}
+  </p>
+</form>

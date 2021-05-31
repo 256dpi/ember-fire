@@ -1,6 +1,11 @@
 <h2>Add Item</h2>
 
-<form {{action "create" on="submit"}}>
+<Form
+  @model={{this.model}}
+  @cancel={{transition "index"}}
+  @submit={{chain (save-model this.model) (transition "index")}}
+  @abandon={{true}}
+>
   <p>
     <label>Name</label>
     <Input @value={{this.model.name}} required placeholder="Name" />
@@ -25,14 +30,4 @@
       </FileUpload>
     {{/if}}
   </p>
-
-  {{#if this.error}}
-    <p>{{this.error}}</p>
-  {{/if}}
-
-  <p>
-    <button type="submit">
-      Create
-    </button>
-  </p>
-</form>
+</Form>

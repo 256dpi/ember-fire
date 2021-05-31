@@ -46,3 +46,30 @@ export function redirectPost(url, data) {
   // submit form
   form.submit();
 }
+
+/**
+ * Get a formatted string from the provided error.
+ *
+ * @param err {Error} The error.
+ * @return {string|undefined} The string.
+ */
+export function getError(err) {
+  // check err
+  if (!err) {
+    return undefined;
+  }
+
+  // oauth2 errors
+  if (err['error_description']) {
+    return err['error_description'];
+  } else if (err['error']) {
+    return err['error'];
+  }
+
+  // json-api errors
+  if (err['errors'] && err['errors'].length > 0) {
+    return err['errors'][0].detail || err['errors'][0].title;
+  }
+
+  return err.toString();
+}
