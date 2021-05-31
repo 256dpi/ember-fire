@@ -1,4 +1,5 @@
 import Service, { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import { singularize } from 'ember-inflector';
 
 import ReconnectingWebsocket from 'reconnecting-websocket';
@@ -25,7 +26,7 @@ export default class extends Service {
   /**
    * Is set to true if the websocket is successfully.
    */
-  connected = false;
+  @tracked connected = false;
 
   /**
    * The callback that is called to handle updates of dirty models.
