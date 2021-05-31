@@ -1,6 +1,5 @@
 import Service, { inject as service } from '@ember/service';
 import EmberObject, { computed } from '@ember/object'; // eslint-disable-line
-import DS from 'ember-data'; // eslint-disable-line
 
 import jwtDecode from 'jwt-decode';
 
@@ -14,16 +13,20 @@ export default class extends Service {
   /**
    * The key used in the data object of the token claim to store the user id.
    *
-   * @type {string}
+   * @return {string}
    */
-  dataKey = 'extra.user';
+  get dataKey() {
+    return 'extra.user';
+  }
 
   /**
    * The name of the model that should be loaded.
    *
-   * @type {string}
+   * @return {string}
    */
-  userModel = 'user';
+  get userModel() {
+    return 'user';
+  }
 
   /**
    * The data read from the access token.

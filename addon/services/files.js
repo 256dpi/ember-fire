@@ -42,18 +42,22 @@ export default class UploadService extends Service {
   }
 
   /**
-   * The URL used for uploads.
+   * Returns the URL used for uploads.
    *
-   * @type {string}
+   * @return {string}
    */
-  uploadURL = '';
+  get uploadURL() {
+    return '';
+  }
 
   /**
-   * The URL used for downloads.
+   * Returns the URL used for downloads.
    *
-   * @type {string}
+   * @return {string}
    */
-  downloadURL = '';
+  get downloadURL() {
+    return '';
+  }
 
   /**
    * Upload will upload the specified file and set or add a link to the provided model.
