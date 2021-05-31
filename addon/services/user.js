@@ -46,21 +46,16 @@ export default class extends Service {
   /**
    * The user model retrieved from the access token.
    *
-   * @return {Model}
+   * @return {Promise<Model>}
    */
   @computed('data', 'userModel', 'dataKey')
   get model() {
-    // get data
-    let data = this.data;
-
     // check existence
-    if (!data) {
-      return null;
+    if (!this.data) {
+      return Promise.reject();
     }
 
     // find user
-    return DS.PromiseObject.create({
-      promise: this.store.findRecord(this.userModel, data.get(this.dataKey)),
-    });
+    return this.store.findRecord(this.userModel, this.data.get(this.dataKey));
   }
 }

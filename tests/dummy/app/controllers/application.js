@@ -6,6 +6,8 @@ import { makeRef } from '@256dpi/ember-fire/utils';
 
 export default class extends Controller {
   @service session;
+  @service watch;
+  @service user;
 
   @action authorize(type) {
     // redirect to authorize endpoint

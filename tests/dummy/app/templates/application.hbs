@@ -7,11 +7,19 @@
 
   {{#if this.session.isAuthenticated}}
     <button type="button" {{on "click" this.signOut}}>Sign Out</button>
-    <span>User: {{this.user.model.name}}</span>
-    <span>Watch: {{this.watch.connected}}</span>
   {{else}}
     <LinkTo @route="sign-in">Sign In</LinkTo>
   {{/if}}
+
+  {{#let (load this.user.model) as |user|}}
+    {{#if user.isResolved}}
+      <span>User: {{user.value.name}}</span>
+    {{else}}
+      <span>No User</span>
+    {{/if}}
+  {{/let}}
+
+  <span>Watch: {{this.watch.connected}}</span>
 
   <button type="button" {{on "click" (fn this.authorize "token")}}>Authorize Token</button>
   <button type="button" {{on "click" (fn this.authorize "code")}}>Authorize Code</button>
