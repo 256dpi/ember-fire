@@ -2,10 +2,10 @@
 
 <Form
   @model={{this.model}}
-  @cancel={{transition "index"}}
-  @abandon={{confirm "Abandon?"}}
-  @submit={{chain (save-model this.model) (transition "index")}}
-  @delete={{confirm "Delete?" (chain (delete-model this.model) (transition "index"))}}
+  @onCancel={{transition "index"}}
+  @onAbandon={{confirm "Abandon?"}}
+  @onSubmit={{chain (save-model this.model) (transition "index")}}
+  @onDelete={{confirm "Delete?" (chain (delete-model this.model) (transition "index"))}}
 >
   <p>
     <label>Name</label>

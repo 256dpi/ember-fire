@@ -14,7 +14,7 @@ export default class extends Controller {
     // set parameters from fragment
     let params = new URLSearchParams(window.location.hash.substr(1));
     for (let pair of params.entries()) {
-      this.set(pair[0], pair[1]);
+      this[pair[0]] = pair[1];
     }
   }
 }

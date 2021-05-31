@@ -138,7 +138,7 @@ export default class extends Service {
     super(...arguments);
 
     // initialize subscriptions
-    this.set('subscriptions', {});
+    this.subscriptions = {};
 
     // initialize
     this.initialize();
@@ -159,7 +159,7 @@ export default class extends Service {
       // close current websocket if existing
       if (ws) {
         ws.close();
-        this.set('websocket', null);
+        this.websocket = null;
       }
 
       return;
@@ -214,12 +214,12 @@ export default class extends Service {
     });
 
     // save websocket
-    this.set('websocket', ws);
+    this.websocket = ws;
   }
 
   openHandler() {
     // set flag
-    this.set('connected', true);
+    this.connected = true;
 
     // resubscribe cached subscriptions
 
@@ -245,7 +245,7 @@ export default class extends Service {
 
   closeHandler() {
     // set flag
-    this.set('connected', false);
+    this.connected = false;
   }
 
   messageHandler(data) {

@@ -2,9 +2,9 @@
 
 <Form
   @model={{this.model}}
-  @cancel={{transition "index"}}
-  @submit={{chain (save-model this.model) (transition "index")}}
-  @abandon={{true}}
+  @onCancel={{transition "index"}}
+  @onSubmit={{chain (save-model this.model) (transition "index")}}
+  @onAbandon={{true}}
 >
   <p>
     <label>Name</label>
