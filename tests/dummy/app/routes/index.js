@@ -1,9 +1,10 @@
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { hash } from 'rsvp';
 
-export default class extends Route.extend(AuthenticatedRouteMixin) {
-  authenticationRoute = 'sign-in';
+export default class extends Route {
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'sign-in');
+  }
 
   model() {
     return hash({

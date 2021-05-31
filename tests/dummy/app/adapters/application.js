@@ -1,8 +1,10 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
-import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
-export default class extends JSONAPIAdapter.extend(DataAdapterMixin) {
+export default class extends JSONAPIAdapter {
+  @service session;
+
   host = 'http://0.0.0.0:8000';
   namespace = 'api';
 
