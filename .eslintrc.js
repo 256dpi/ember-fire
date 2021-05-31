@@ -21,8 +21,7 @@ module.exports = {
     browser: true
   },
   rules: {
-    'no-unused-vars': ['error', { 'vars': 'all', 'args': 'none', 'ignoreRestSiblings': false }],
-    'ember/no-observers': 'off' // TODO: Remove.
+    'no-unused-vars': ['error', { 'vars': 'all', 'args': 'none', 'ignoreRestSiblings': false }]
   },
   overrides: [
     // node files

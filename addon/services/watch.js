@@ -4,6 +4,8 @@ import { singularize } from 'ember-inflector';
 
 import ReconnectingWebsocket from 'reconnecting-websocket';
 
+// TODO: Remove authentication observer.
+
 /**
  * The Watch service manages resource watching.
  */
@@ -142,7 +144,7 @@ export default class extends Service {
     this.initialize();
 
     // add observer
-    this.addObserver('session.isAuthenticated', this, this.initialize);
+    this.addObserver('session.isAuthenticated', this, this.initialize); // eslint-disable-line
   }
 
   initialize() {
