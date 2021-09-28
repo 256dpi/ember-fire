@@ -14,7 +14,7 @@ export default class Pagination {
 
   /* Number */
 
-  get currentNumber() {
+  get currentPage() {
     return parseInt(getParam(this.list.links?.self, 'page[number]') || '');
   }
 
