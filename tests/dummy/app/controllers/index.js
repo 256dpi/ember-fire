@@ -11,7 +11,7 @@ export default class extends Controller {
   @tracked page = 1;
 
   get pages() {
-    return (new Pagination(this.model.items)).allPages;
+    return new Pagination(this.model.items).allPages;
   }
 
   @action add(item) {
