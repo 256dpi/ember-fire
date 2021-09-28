@@ -6,13 +6,22 @@ export default class extends Route {
   @service store;
   @service session;
 
+  queryParams = {
+    page: {
+      refreshModel: true,
+    },
+  };
+
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'sign-in');
   }
 
-  model() {
+  model(params) {
     return hash({
-      items: this.store.findAll('item'),
+      items: this.store.query('item', {
+        'page[size]': 5,
+        'page[number]': params.page,
+      }),
       values: this.store.findAll('value'),
       files: this.store.findAll('file'),
       jobs: this.store.findAll('job'),

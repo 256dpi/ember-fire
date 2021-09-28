@@ -38,6 +38,7 @@
     "ember-cli-babel": "^7.26.3",
     "ember-cli-htmlbars": "^5.7.1",
     "jwt-decode": "^2.2.0",
+    "query-string": "^7.0.1",
     "reconnecting-websocket": "^4.1.10"
   },
   "devDependencies": {

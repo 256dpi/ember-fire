@@ -4,6 +4,14 @@
   <LinkTo @route="new">Create Item</LinkTo>
 </p>
 
+<p>
+  {{#each this.pages as |page|}}
+    <LinkTo @query={{hash page=page}}>
+      Page {{page}}
+    </LinkTo>
+  {{/each}}
+</p>
+
 <table>
   <thead>
     <tr>
