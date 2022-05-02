@@ -114,7 +114,7 @@ export default class UploadService extends Service {
       }
     } catch (err) {
       // remove from queue
-      file.queue.remove(file);
+      file.queue?.remove(file);
 
       // rethrow
       throw err;
