@@ -1,6 +1,6 @@
 {
   "name": "@256dpi/ember-fire",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Ember extensions for the fire framework.",
   "keywords": [
     "ember-addon"
