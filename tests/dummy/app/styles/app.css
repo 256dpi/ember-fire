@@ -11,3 +11,7 @@ table td, table th {
   padding: 5px 10px;
   text-align: left;
 }
+
+label {
+  display: block;
+}

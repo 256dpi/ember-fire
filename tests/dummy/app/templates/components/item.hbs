@@ -9,16 +9,23 @@
 </p>
 
 <p>
-  <label>File</label><br>
+  <label for="file">File</label>
 
   {{#if @model.file}}
-    <img src={{file-url @model.file}} height="100" alt="...">
+    <img src={{file-url @model.file}} height="100" alt="..."><br>
     <button type="button" {{on "click" (fn this.files.unset @model 'file')}}>
       Unset
     </button>
   {{else}}
-    <FileUpload @name="file" @accept="image/*" @onFileAdd={{fn this.files.upload @model 'file' false}}>
-      Upload
-    </FileUpload>
+    {{#let (file-queue name="files" onFileAdded=(fn this.files.upload @model 'file' false)) as |queue|}}
+      <label for="upload-photo">
+        <input
+          type="file"
+          id="upload-photo"
+          accept="image/*"
+          {{queue.selectFile}}
+        >
+      </label>
+    {{/let}}
   {{/if}}
 </p>
