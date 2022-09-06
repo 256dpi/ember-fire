@@ -10,6 +10,14 @@ This add-on provides a set of tools to integrate ember with the [fire](https://g
 ember install @256dpi/ember-fire
 ```
 
+## Compatibility
+
+The current version of the addon targets the following versions:
+
+- ember: 4.4 (LTS)
+- ember-simple-auth: 4.2.2
+- ember-file-upload: 5.1.0
+
 ## Services
 
 - The [`Files`](https://github.com/256dpi/ember-fire/blob/master/addon/services/files.js) service handles uploads and
