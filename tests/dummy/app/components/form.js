@@ -23,14 +23,14 @@ export default class extends Component {
     }
   }
 
-  @action
-  submit(e) {
+  @action submit(e) {
     e.preventDefault();
+
+    // call callback
     this.args.onSubmit();
   }
 
-  @action
-  reset() {
+  @action reset() {
     // rollback attributes
     if (this.args.changeset) {
       this.args.changeset.rollback();
@@ -39,8 +39,7 @@ export default class extends Component {
     }
   }
 
-  @action
-  cancel() {
+  @action cancel() {
     // handle unsaved new models
     if (this.args.model.isNew) {
       this.args.model.unloadRecord();

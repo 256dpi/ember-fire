@@ -14,7 +14,6 @@ export default class extends JSONAPIAdapter {
     if (this.session.isAuthenticated) {
       headers['Authorization'] = `Bearer ${this.session.data.authenticated.access_token}`;
     }
-
     return headers;
   }
 }
