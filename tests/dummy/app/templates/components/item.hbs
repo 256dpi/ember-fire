@@ -1,0 +1,24 @@
+<p>
+  <label for="name">Name</label>
+  <Input id="name" @value={{@model.name}} required placeholder="Name" />
+</p>
+
+<p>
+  <label for="state">State</label>
+  <Input id="state" @type="checkbox" @checked={{@model.state}} />
+</p>
+
+<p>
+  <label>File</label><br>
+
+  {{#if @model.file}}
+    <img src={{file-url @model.file}} height="100" alt="...">
+    <button type="button" {{on "click" (fn this.files.unset @model 'file')}}>
+      Unset
+    </button>
+  {{else}}
+    <FileUpload @name="file" @accept="image/*" @onFileAdd={{fn this.files.upload @model 'file' false}}>
+      Upload
+    </FileUpload>
+  {{/if}}
+</p>

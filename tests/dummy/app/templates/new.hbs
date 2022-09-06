@@ -6,28 +6,5 @@
   @onSubmit={{chain (save-model this.model) (transition "index")}}
   @onAbandon={{true}}
 >
-  <p>
-    <label for="name">Name</label>
-    <Input id="name" @value={{this.model.name}} required placeholder="Name" />
-  </p>
-
-  <p>
-    <label for="state">State</label>
-    <Input id="state" @type="checkbox" @checked={{this.model.state}} />
-  </p>
-
-  <p>
-    <label>File</label><br>
-
-    {{#if this.model.file}}
-      <img src={{file-url this.model.file}} height="100" alt="...">
-      <button type="button" {{on "click" (fn this.files.unset this.model 'file')}}>
-        Unset
-      </button>
-    {{else}}
-      <FileUpload @name="file" @accept="image/*" @onFileAdd={{fn this.files.upload this.model 'file' false}}>
-        Upload
-      </FileUpload>
-    {{/if}}
-  </p>
+  <Item @model={{this.model}}/>
 </Form>
