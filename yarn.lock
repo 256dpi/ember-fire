@@ -4376,17 +4376,6 @@ elliptic@^6.5.3:
     minimalistic-assert "^1.0.1"
     minimalistic-crypto-utils "^1.0.1"
 
-ember-async-data@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/ember-async-data/-/ember-async-data-0.6.0.tgz#50a47655dbea30328d036f04b67d2f4529aceb06"
-  integrity sha512-zgE5N4DVHr9b6Hlnev6Z8zMyD7mII/ewE/6t+7eHTrshe9vwSTA6eiT5fCKmHeSob5ThU51J+Alwl2QACtsL/A==
-  dependencies:
-    "@ember/test-waiters" "^3.0.0"
-    ember-cli-babel "^7.26.6"
-    ember-cli-htmlbars "^5.7.1"
-    ember-cli-typescript "^4.1.0"
-    ember-destroyable-polyfill "^2.0.3"
-
 ember-auto-import@^1.11.3:
   version "1.12.2"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.12.2.tgz#cc7298ee5c0654b0249267de68fb27a2861c3579"
