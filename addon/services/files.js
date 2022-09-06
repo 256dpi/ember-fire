@@ -28,7 +28,7 @@ export class Link {
   }
 }
 
-export default class UploadService extends Service {
+export default class extends Service {
   @service store;
   @service session;
 

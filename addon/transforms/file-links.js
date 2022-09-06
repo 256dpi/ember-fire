@@ -3,7 +3,7 @@ import { A } from '@ember/array';
 
 import { Link } from '../services/files';
 
-export default class FileLinksTransform extends Transform {
+export default class extends Transform {
   /**
    * The factory used to create a new link object.
    *

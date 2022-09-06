@@ -2,7 +2,7 @@ import Transform from '@ember-data/serializer/transform';
 
 import { Link } from '../services/files';
 
-export default class FileLinkTransform extends Transform {
+export default class extends Transform {
   /**
    * The factory used to create a new link object.
    *
