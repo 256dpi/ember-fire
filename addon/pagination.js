@@ -23,7 +23,7 @@ export default class Pagination {
   }
 
   get allPages() {
-    return [...Array(this.lastPage).keys()].map((i) => i + 1);
+    return [...Array(this.lastPage || 0).keys()].map((i) => i + 1);
   }
 
   /* Cursor */
