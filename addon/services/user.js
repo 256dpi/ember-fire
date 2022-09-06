@@ -55,7 +55,7 @@ export default class extends Service {
   get model() {
     // check existence
     if (!this.data) {
-      return Promise.reject();
+      return Promise.resolve(undefined);
     }
 
     // find user
