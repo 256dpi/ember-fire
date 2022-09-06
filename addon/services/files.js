@@ -88,15 +88,12 @@ export default class extends Service {
         keys: [key],
       } = await res.json();
 
-      // read as url for preview
-      const buf = await file.readAsArrayBuffer();
-
-      // create blob url
-      let url = URL.createObjectURL(new Blob([buf], { type: file.type }));
-
       // create link
       let link = this.factory(makeRef(), file.name, file.type, file.size, key, '');
-      link.preview = url;
+
+      // set preview
+      const buf = await file.readAsArrayBuffer();
+      link.preview = URL.createObjectURL(new Blob([buf], { type: file.type }));
 
       // set link
       if (multiple) {
@@ -147,7 +144,7 @@ export default class extends Service {
   }
 
   /**
-   * Return an URL for the specified link.
+   * Return a URL for the specified link.
    *
    * @param link {Link}
    * @return {string}
