@@ -1,4 +1,4 @@
-<form {{on "submit" (prevent-default @onSubmit)}}>
+<form {{on "submit" this.submit}}>
   {{yield}}
 
   <p>

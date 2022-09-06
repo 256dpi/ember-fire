@@ -24,6 +24,12 @@ export default class extends Component {
   }
 
   @action
+  submit(e) {
+    e.preventDefault();
+    this.args.onSubmit();
+  }
+
+  @action
   reset() {
     // rollback attributes
     if (this.args.changeset) {
