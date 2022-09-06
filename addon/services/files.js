@@ -76,10 +76,10 @@ export default class extends Service {
     try {
       // upload file
       const res = await file.uploadBinary(this.uploadURL, {
-        contentType: file.blob.type,
+        contentType: file.type,
         headers: {
           Authorization: `Bearer ${access_token}`,
-          'Content-Disposition': `attachment; filename="${file.blob.name}"`,
+          'Content-Disposition': `attachment; filename="${file.name}"`,
         },
       });
 
@@ -92,10 +92,10 @@ export default class extends Service {
       const buf = await file.readAsArrayBuffer();
 
       // create blob url
-      let url = URL.createObjectURL(new Blob([buf], { type: file.blob.type }));
+      let url = URL.createObjectURL(new Blob([buf], { type: file.type }));
 
       // create link
-      let link = this.factory(makeRef(), file.blob.name, file.blob.type, file.blob.size, key, '');
+      let link = this.factory(makeRef(), file.name, file.type, file.size, key, '');
       link.preview = url;
 
       // set link
