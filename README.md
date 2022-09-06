@@ -16,7 +16,7 @@ The current version of the addon targets the following versions:
 
 - ember: 4.4 (LTS)
 - ember-simple-auth: 4.2.2
-- ember-file-upload: 5.1.0
+- ember-file-upload: 7.1.0
 
 ## Services
 

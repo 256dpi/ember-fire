@@ -84,9 +84,9 @@ export default class extends Service {
       });
 
       // get key
-      let {
+      const {
         keys: [key],
-      } = JSON.parse(res.body);
+      } = await res.json();
 
       // read as url for preview
       const buf = await file.readAsArrayBuffer();
