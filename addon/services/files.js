@@ -88,8 +88,11 @@ export default class extends Service {
         keys: [key],
       } = await res.json();
 
+      // get size
+      const size = file.file?.size || file.size; // the latter seems incorrect
+
       // create link
-      let link = this.factory(makeRef(), file.name, file.type, file.size, key, '');
+      let link = this.factory(makeRef(), file.name, file.type, size, key, '');
 
       // set preview
       const buf = await file.readAsArrayBuffer();
