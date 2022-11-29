@@ -1,17 +1,9 @@
 import Transform from '@ember-data/serializer/transform';
+import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
 
-import { Link } from '../services/files';
-
 export default class extends Transform {
-  /**
-   * The factory used to create a new link object.
-   *
-   * @return {Link}
-   */
-  factory() {
-    return new Link(...arguments);
-  }
+  @service files;
 
   /* private */
 
@@ -41,7 +33,15 @@ export default class extends Transform {
 
     return A(
       values.map((value) => {
-        return this.factory(value.ref, value.name, value.type, value.size, value['claim-key'], value['view-key']);
+        return this.files.factory(
+          value.ref,
+          value.name,
+          value.type,
+          value.size,
+          value['claim-key'],
+          value['view-key'],
+          this.files
+        );
       })
     );
   }

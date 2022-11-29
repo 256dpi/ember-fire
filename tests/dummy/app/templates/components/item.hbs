@@ -12,7 +12,7 @@
   <label for="file">File</label>
 
   {{#if @model.file}}
-    <img src={{file-url @model.file}} height="100" alt="..."><br>
+    <img src={{@model.file.url}} height="100" alt="..."><br>
     <button type="button" {{on "click" (fn (mut @model.file) null)}}>
       Unset
     </button>

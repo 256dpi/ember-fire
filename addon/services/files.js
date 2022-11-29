@@ -15,15 +15,21 @@ export class Link {
   @tracked size = 0;
   @tracked claimKey = '';
   @tracked viewKey = '';
+  @tracked service = null;
   @tracked preview = '';
 
-  constructor(ref, name, type, size, claimKey, viewKey) {
+  constructor(ref, name, type, size, claimKey, viewKey, service) {
     this.ref = ref;
     this.name = name;
     this.type = type;
     this.size = size;
     this.claimKey = claimKey;
     this.viewKey = viewKey;
+    this.service = service;
+  }
+
+  get url() {
+    return this.service.url(this);
   }
 }
 
@@ -88,7 +94,7 @@ export default class extends Service {
       const size = file.file?.size || file.size; // the latter seems incorrect
 
       // create link
-      let link = this.factory(makeRef(), file.name, file.type, size, key, '');
+      let link = this.factory(makeRef(), file.name, file.type, size, key, '', this);
 
       // set preview
       const buf = await file.readAsArrayBuffer();
