@@ -2,7 +2,6 @@ import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import { A } from '@ember/array';
 
 import { makeRef } from '../utils';
 
@@ -60,16 +59,13 @@ export default class extends Service {
   }
 
   /**
-   * Upload will upload the specified file and set or add a link to the provided model.
+   * Upload will upload the specified file and return a constructed link.
    *
-   * @param model {Model}
-   * @param field {string}
-   * @param multiple {boolean}
    * @param file {File}
-   * @return {Promise<void>}
+   * @return {Promise<*>}
    */
   @action
-  async upload(model, field, multiple, file) {
+  async upload(file) {
     // get access token
     let { access_token } = this.session.data.authenticated;
 
@@ -98,20 +94,7 @@ export default class extends Service {
       const buf = await file.readAsArrayBuffer();
       link.preview = URL.createObjectURL(new Blob([buf], { type: file.type }));
 
-      // set link
-      if (multiple) {
-        // get list
-        let list = [];
-        if (model.get(field)) {
-          list = model.get(field).toArray();
-        }
-
-        // add link
-        model.set(field, A(list.concat([link])));
-      } else {
-        // set link
-        model.set(field, link);
-      }
+      return link;
     } catch (err) {
       // remove from queue
       file.queue?.remove(file);
@@ -119,31 +102,6 @@ export default class extends Service {
       // rethrow
       throw err;
     }
-  }
-
-  /**
-   * Unset will unset the specified link.
-   *
-   * @param model {Model}
-   * @param field {string}
-   */
-  @action
-  unset(model, field) {
-    // unset link
-    model.set(field, null);
-  }
-
-  /**
-   * Remove will remove the specified link.
-   *
-   * @param model {Model}
-   * @param field {string}
-   * @param link {Link}
-   */
-  @action
-  remove(model, field, link) {
-    // remove link
-    model.set(field, model.get(field).without(link));
   }
 
   /**

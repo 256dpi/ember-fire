@@ -13,11 +13,11 @@
 
   {{#if @model.file}}
     <img src={{file-url @model.file}} height="100" alt="..."><br>
-    <button type="button" {{on "click" (fn this.files.unset @model 'file')}}>
+    <button type="button" {{on "click" (fn (mut @model.file) null)}}>
       Unset
     </button>
   {{else}}
-    {{#let (file-queue name="files" onFileAdded=(fn this.files.upload @model 'file' false)) as |queue|}}
+    {{#let (file-queue name="files" onFileAdded=(pipe (fn this.files.upload) (fn (mut @model.file)))) as |queue|}}
       <label for="upload-photo">
         <input
           type="file"
