@@ -6,9 +6,9 @@ import { action } from '@ember/object';
 import { makeRef } from '../utils';
 
 /**
- * The common link model.
+ * The common file link.
  */
-export class Link {
+export class FileLink {
   @tracked ref = '';
   @tracked name = '';
   @tracked type = '';
@@ -38,12 +38,12 @@ export default class extends Service {
   @service session;
 
   /**
-   * The factory used to create a new link object.
+   * The factory used to create a new file link object.
    *
-   * @return {Link}
+   * @return {FileLink}
    */
   factory() {
-    return new Link(...arguments);
+    return new FileLink(...arguments);
   }
 
   /**
@@ -68,7 +68,7 @@ export default class extends Service {
    * Upload will upload the specified file and return a constructed link.
    *
    * @param file {File}
-   * @return {Promise<*>}
+   * @return {Promise<FileLink>}
    */
   @action
   async upload(file) {
@@ -111,9 +111,9 @@ export default class extends Service {
   }
 
   /**
-   * Return a URL for the specified link.
+   * Return a URL for the specified file link.
    *
-   * @param link {Link}
+   * @param link {FileLink}
    * @return {string}
    */
   url(link) {
