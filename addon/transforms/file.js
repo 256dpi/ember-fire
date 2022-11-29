@@ -4,8 +4,6 @@ import { inject as service } from '@ember/service';
 export default class extends Transform {
   @service files;
 
-  /* private */
-
   serialize(file) {
     // check null
     if (!file) {

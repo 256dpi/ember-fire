@@ -5,8 +5,6 @@ import { A } from '@ember/array';
 export default class extends Transform {
   @service files;
 
-  /* private */
-
   serialize(files) {
     // check null
     if (!files) {
