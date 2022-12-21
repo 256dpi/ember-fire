@@ -81,7 +81,7 @@ export default class extends Service {
         contentType: file.type,
         headers: {
           Authorization: `Bearer ${access_token}`,
-          'Content-Disposition': `attachment; filename="${file.name}"`,
+          'Content-Disposition': `attachment; filename*=utf-8''${encodeURI(file.name)}`,
         },
       });
 
