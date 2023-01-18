@@ -6,11 +6,11 @@ export default class extends Store {
    *
    * @param model {string}
    * @param filters {Object}
+   * @param query {Object}
    * @return {Promise<[Model]>}
    */
-  filterAll(model, filters) {
-    // compute query
-    let query = {};
+  filterAll(model, filters = {}, query = {}) {
+    // add filters
     Object.keys(filters).forEach(function (key) {
       query['filter[' + key + ']'] = filters[key];
     });
@@ -23,12 +23,13 @@ export default class extends Store {
    *
    * @param model {string}
    * @param filters {Object}
+   * @param query {Object}
    * @return {Promise<Model>}
    */
-  filterRecord(model, filters) {
+  filterRecord(model, filters = {}, query = {}) {
     return new Promise((resolve, reject) => {
       // query endpoint
-      this.filterAll(model, filters).then(
+      this.filterAll(model, filters, query).then(
         (result) => {
           // return first object on success
           resolve(result.objectAt(0));
