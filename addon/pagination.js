@@ -12,7 +12,7 @@ export default class Pagination {
     this.list = list;
   }
 
-  /* Number */
+  /* Offset */
 
   get currentPage() {
     return parseInt(getParam(this.list.links?.self, 'page[number]') || '');
