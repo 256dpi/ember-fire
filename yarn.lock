@@ -4011,6 +4011,14 @@ electron-to-chromium@^1.4.431:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.459.tgz#25a23370f4ae8aaa8f77aaf00133aa4994f4148e"
   integrity sha512-XXRS5NFv8nCrBL74Rm3qhJjA2VCsRFx0OjHKBMPI0otij56aun8UWiKTDABmd5/7GTR021pA4wivs+Ri6XCElg==
 
+ember-async-data@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ember-async-data/-/ember-async-data-1.0.1.tgz#57158eba0c75eac64b7d030a6e5c5d01b4cb6020"
+  integrity sha512-R9nBxCZ9WDPMJpuGBODs8wV1PHXUbkSbrzVmL34R4aOWbx237yLBllJghQOwfJs1+D72wdzgxg/+J3DY43xz3g==
+  dependencies:
+    "@ember/test-waiters" "^3.0.0"
+    "@embroider/addon-shim" "^1.8.4"
+
 ember-auto-import@^2.0.0, ember-auto-import@^2.5.0, ember-auto-import@^2.6.0, ember-auto-import@^2.6.1, ember-auto-import@^2.6.3:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-2.6.3.tgz#f18d1b93dd10b08ba5496518436f9d56dd4e000a"

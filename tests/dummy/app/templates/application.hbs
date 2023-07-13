@@ -7,9 +7,11 @@
 
   |
 
-  {{#if this.user.model.name}}
-    <span>{{this.user.model.name}}</span>
-  {{/if}}
+  {{#let (load this.user.model) as |user|}}
+    {{#if user.isResolved}}
+      <span>{{user.value.name}}</span>
+    {{/if}}
+  {{/let}}
 
   {{#if this.session.isAuthenticated}}
     <button type="button" {{on "click" this.signOut}}>Sign Out</button>
