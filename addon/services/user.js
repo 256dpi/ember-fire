@@ -1,5 +1,6 @@
 import Service, { inject as service } from '@ember/service';
-import EmberObject, { computed } from '@ember/object'; // eslint-disable-line
+import { get } from '@ember/object';
+import { cached } from '@glimmer/tracking';
 
 import jwtDecode from 'jwt-decode';
 
@@ -31,9 +32,8 @@ export default class extends Service {
   /**
    * The data read from the access token.
    *
-   * @return {Object}
+   * @return {Object|null}
    */
-  @computed('session.{isAuthenticated,data.authenticated.access_token}') // eslint-disable-line
   get data() {
     // check authentication
     if (!this.session.isAuthenticated) {
@@ -43,22 +43,30 @@ export default class extends Service {
     // get access token
     let data = jwtDecode(this.session.data.authenticated.access_token);
 
-    return EmberObject.create(data['dat']);
+    return data['dat'];
+  }
+
+  /**
+   * Returns the user id from the data object of the token claim.
+   *
+   * @returns {string|undefined}
+   */
+  get id() {
+    return get(this.data, this.dataKey);
   }
 
   /**
    * The user model retrieved from the access token.
    *
-   * @return {Promise<Model>}
+   * @return {Promise<Model|undefined>}
    */
-  @computed('data', 'userModel', 'dataKey')
-  get model() {
+  @cached get model() {
     // check existence
     if (!this.data) {
-      return Promise.resolve(undefined);
+      return undefined;
     }
 
     // find user
-    return this.store.findRecord(this.userModel, this.data.get(this.dataKey));
+    return this.store.findRecord(this.userModel, this.id);
   }
 }
