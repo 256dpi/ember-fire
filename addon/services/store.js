@@ -1,6 +1,18 @@
-import Store from '@ember-data/store';
+import Store, { CacheHandler } from '@ember-data/store';
+import RequestManager from '@ember-data/request';
+import { LegacyNetworkHandler } from '@ember-data/legacy-compat';
+
+// TODO: Move to new request manager handlers.
 
 export default class extends Store {
+  requestManager = new RequestManager();
+
+  constructor(args) {
+    super(args);
+    this.requestManager.use([LegacyNetworkHandler]);
+    this.requestManager.useCache(CacheHandler);
+  }
+
   /**
    * Will find multiple models using the provided filters.
    *
