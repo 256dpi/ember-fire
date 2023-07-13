@@ -5,7 +5,10 @@
   @onCancel={{transition "index"}}
   @onAbandon={{confirm "Abandon?"}}
   @onSubmit={{chain (save-model this.model) (transition "index")}}
-  @onDelete={{confirm "Delete?" (chain (delete-model this.model) (transition "index"))}}
+  @onDelete={{confirm
+    "Delete?"
+    (chain (delete-model this.model) (transition "index"))
+  }}
 >
-  <Item @model={{this.model}}/>
+  <Item @model={{this.model}} />
 </Form>

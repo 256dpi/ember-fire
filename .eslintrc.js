@@ -22,10 +22,7 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {
-    'no-unused-vars': ['error', { vars: 'all', args: 'none', ignoreRestSiblings: false }], // TODO: Remove?
-    'prettier/prettier': 'off', // TODO: Remove?
-  },
+  rules: {},
   overrides: [
     // node files
     {

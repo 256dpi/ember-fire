@@ -7,7 +7,8 @@
 <p>
   {{#each this.pages as |page|}}
     <LinkTo @query={{hash page=page}}>
-      Page {{page}}
+      Page
+      {{page}}
     </LinkTo>
   {{/each}}
 </p>
@@ -33,14 +34,17 @@
 
         <td>
           {{#if item.file}}
-            <img src={{item.file.url}} height="100" alt="...">
+            <img src={{item.file.url}} height="100" alt="..." />
           {{/if}}
         </td>
 
         <td>
-          Name: {{item.file.name}}<br>
-          Type: {{item.file.type}}<br>
-          Size: {{item.file.size}}<br>
+          Name:
+          {{item.file.name}}<br />
+          Type:
+          {{item.file.type}}<br />
+          Size:
+          {{item.file.size}}<br />
 
           <button type="button" {{on "click" (fn this.add item)}}>
             Add

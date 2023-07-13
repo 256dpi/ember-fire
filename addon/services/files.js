@@ -81,7 +81,9 @@ export default class extends Service {
         contentType: file.type,
         headers: {
           Authorization: `Bearer ${access_token}`,
-          'Content-Disposition': `attachment; filename*=utf-8''${encodeURI(file.name)}`,
+          'Content-Disposition': `attachment; filename*=utf-8''${encodeURI(
+            file.name
+          )}`,
         },
       });
 
@@ -94,7 +96,15 @@ export default class extends Service {
       const size = file.file?.size || file.size; // the latter seems incorrect
 
       // create link
-      let link = this.factory(makeRef(), file.name, file.type, size, key, '', this);
+      let link = this.factory(
+        makeRef(),
+        file.name,
+        file.type,
+        size,
+        key,
+        '',
+        this
+      );
 
       // set preview
       const buf = await file.readAsArrayBuffer();

@@ -8,7 +8,13 @@ import { redirectPost } from '@256dpi/ember-fire/utils';
 export default class extends Controller {
   @service session;
 
-  queryParams = ['client_id', 'response_type', 'scope', 'state', 'redirect_uri'];
+  queryParams = [
+    'client_id',
+    'response_type',
+    'scope',
+    'state',
+    'redirect_uri',
+  ];
 
   @tracked client_id;
   @tracked response_type;

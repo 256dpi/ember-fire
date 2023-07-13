@@ -45,7 +45,9 @@ export default class extends Service {
    */
   handleDirtyUpdate(model) {
     // ask to continue
-    alert('This model has been updated.\nWe will now reset it to reflect the latest changes.');
+    alert(
+      'This model has been updated.\nWe will now reset it to reflect the latest changes.'
+    );
 
     // rollback and reload
     model.rollbackAttributes();
@@ -59,7 +61,9 @@ export default class extends Service {
    */
   handleDirtyDelete(model) {
     // inform
-    alert('This model has been deleted.\nWe will remove it to reflect the latest changes.');
+    alert(
+      'This model has been deleted.\nWe will remove it to reflect the latest changes.'
+    );
 
     // rollback and unload
     model.rollbackAttributes();

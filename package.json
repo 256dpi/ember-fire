@@ -32,7 +32,7 @@
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each",
-    "fmt": "prettier --single-quote --print-width 120 --write './addon/**/*.js' './config/**/*.js' './tests/**/*.js'"
+    "fmt": "prettier -w ."
   },
   "dependencies": {
     "@glimmer/tracking": "^1.1.2",

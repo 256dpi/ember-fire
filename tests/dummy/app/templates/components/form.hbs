@@ -2,7 +2,11 @@
   {{yield}}
 
   <p>
-    <button type="submit" class="button" disabled={{or (not this.dirty) @model.isSaving}}>
+    <button
+      type="submit"
+      class="button"
+      disabled={{or (not this.dirty) @model.isSaving}}
+    >
       {{#if @model.isSaving}}
         Saving...
       {{else if @model.isNew}}
@@ -13,19 +17,34 @@
     </button>
 
     {{#unless @model.isNew}}
-      <button type="button" class="button" {{on "click" this.reset}} disabled={{or (not this.dirty) @model.isSaving}}>
+      <button
+        type="button"
+        class="button"
+        {{on "click" this.reset}}
+        disabled={{or (not this.dirty) @model.isSaving}}
+      >
         Reset
       </button>
     {{/unless}}
 
     {{#if @onCancel}}
-      <button type="button" class="button" {{on "click" this.cancel}} disabled={{@model.isSaving}}>
+      <button
+        type="button"
+        class="button"
+        {{on "click" this.cancel}}
+        disabled={{@model.isSaving}}
+      >
         Cancel
       </button>
     {{/if}}
 
     {{#if @onDelete}}
-      <button type="button" class="button" {{on "click" @onDelete}} disabled={{@model.isSaving}}>
+      <button
+        type="button"
+        class="button"
+        {{on "click" @onDelete}}
+        disabled={{@model.isSaving}}
+      >
         Delete
       </button>
     {{/if}}

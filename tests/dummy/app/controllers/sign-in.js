@@ -14,8 +14,10 @@ export default class extends Controller {
   @action
   signIn(e) {
     e.preventDefault();
-    this.session.authenticate('authenticator:oauth2', this.email, this.password).catch((err) => {
-      alert(getError(err));
-    });
+    this.session
+      .authenticate('authenticator:oauth2', this.email, this.password)
+      .catch((err) => {
+        alert(getError(err));
+      });
   }
 }
