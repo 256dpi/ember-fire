@@ -55,7 +55,7 @@ export default class extends Service {
   }
 
   /**
-   * The callback that is called to handle deletion of of dirty models.
+   * The callback that is called to handle deletion of dirty models.
    *
    * @param model {Model}.
    */
@@ -67,7 +67,6 @@ export default class extends Service {
 
     // rollback and unload
     model.rollbackAttributes();
-    model.deleteRecord();
     model.unloadRecord();
 
     // transition to root
@@ -303,7 +302,6 @@ export default class extends Service {
 
     // unload immediately if not dirty
     if (!record.get('hasDirtyAttributes')) {
-      record.deleteRecord();
       record.unloadRecord();
       return;
     }
