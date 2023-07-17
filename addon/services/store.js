@@ -36,21 +36,10 @@ export default class extends Store {
    * @param model {string}
    * @param filters {Object}
    * @param query {Object}
-   * @return {Promise<Model>}
+   * @return {Promise<Model|undefined>}
    */
-  filterRecord(model, filters = {}, query = {}) {
-    return new Promise((resolve, reject) => {
-      // query endpoint
-      this.filterAll(model, filters, query).then(
-        (result) => {
-          // return first object on success
-          resolve(result.objectAt(0));
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
+  async filterRecord(model, filters = {}, query = {}) {
+    return (await this.filterAll(model, filters, query))[0];
   }
 
   /**
