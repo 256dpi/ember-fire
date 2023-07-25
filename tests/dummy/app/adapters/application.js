@@ -5,7 +5,7 @@ import { computed } from '@ember/object'; // eslint-disable-line
 export default class extends JSONAPIAdapter {
   @service session;
 
-  host = 'http://0.0.0.0:8000';
+  host = 'http://localhost:8000';
   namespace = 'api';
 
   @computed('session.{isAuthenticated,data.authenticated.access_token}') // eslint-disable-line

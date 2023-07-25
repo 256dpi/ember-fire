@@ -27,7 +27,7 @@ export default class extends Controller {
     let { access_token } = this.session.data.authenticated;
 
     // perform POST redirection
-    redirectPost('http://0.0.0.0:8000/auth/authorize', {
+    redirectPost('http://localhost:8000/auth/authorize', {
       access_token: access_token,
       client_id: this.client_id,
       response_type: this.response_type,

@@ -2,6 +2,6 @@ import OAuth2PasswordGrant from 'ember-simple-auth/authenticators/oauth2-passwor
 
 export default class extends OAuth2PasswordGrant {
   clientId = 'main-key';
-  serverTokenEndpoint = 'http://0.0.0.0:8000/auth/token';
-  serverTokenRevocationEndpoint = 'http://0.0.0.0:8000/auth/revoke';
+  serverTokenEndpoint = 'http://localhost:8000/auth/token';
+  serverTokenRevocationEndpoint = 'http://localhost:8000/auth/revoke';
 }
