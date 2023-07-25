@@ -59,16 +59,18 @@ export function getError(err) {
     return undefined;
   }
 
-  // oauth2 errors
-  if (err['error_description']) {
-    return err['error_description'];
-  } else if (err['error']) {
-    return err['error'];
+  // json-api errors
+  if (err.errors?.length > 0) {
+    return err.errors[0].detail || err.errors[0].title;
   }
 
-  // json-api errors
-  if (err['errors'] && err['errors'].length > 0) {
-    return err['errors'][0].detail || err['errors'][0].title;
+  // oauth2 errors
+  if (err.responseJSON?.error) {
+    return err.responseJSON.error;
+  } else if (err.error_description) {
+    return err.error_description;
+  } else if (err.error) {
+    return err.error;
   }
 
   return err.toString();
