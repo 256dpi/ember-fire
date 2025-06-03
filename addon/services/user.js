@@ -52,7 +52,8 @@ export default class extends Service {
    * @returns {string|undefined}
    */
   get id() {
-    return get(this.data, this.dataKey);
+    const data = this.data;
+    return data ? get(data, this.dataKey) : undefined;
   }
 
   /**
